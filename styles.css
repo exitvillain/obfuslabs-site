@@ -35,6 +35,7 @@ a {
   display: flex;
   justify-content: flex-end;
   flex-grow: 1; /* Allows right content to move left if needed */
+  margin-right: 20px;
 }
 
 .nav-right a {
