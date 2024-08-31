@@ -33,7 +33,7 @@ a {
 
 .nav-right {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   flex-grow: 1; /* Allows right content to move left if needed */
   padding-left: 300px;
 }
