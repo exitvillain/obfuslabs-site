@@ -30,6 +30,12 @@ a {
   font-size: 1.2em;
 }
 
+.nav-right {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1; /* Allows right content to move left if needed */
+}
+
 .nav-right a {
   margin-left: 10px;
   font-size: 1em;
