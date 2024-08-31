@@ -13,18 +13,18 @@ a {
 }
 
 /* Navbar Styles */
+/* Navbar Styles */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #111;
-  padding: 15px 15px;  /* Adjusted padding to allow more space */
+  padding: 15px 20px;
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 100;
   box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-  box-sizing: border-box; /* Ensures padding and width are calculated together */
 }
 
 .nav-left .prompt {
