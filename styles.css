@@ -1,13 +1,75 @@
 body {
     background-color: black;
-    color: #6495ED; /* Hacker green text, you can change this to red (#ff0000) or blue (#0000ff) hacker green:#00ff00 */
+    color: #00ff00; /* Hacker green text */
     font-family: 'Menlo', 'Consolas', monospace;
+    margin: 0;
+    padding: 0;
 }
 
-header h1 {
-    font-size: 2.5em;
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
 }
 
-header p, section p {
+.nav-left {
+    color: #00ff00;
     font-size: 1.2em;
+}
+
+.nav-right a {
+    color: #00ff00;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.nav-right a:hover {
+    text-decoration: underline;
+}
+
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 200px;
+    background-color: #333;
+    padding: 20px;
+    height: 100%;
+    color: #00ff00;
+}
+
+.profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.social-links {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0;
+}
+
+.social-links li {
+    margin: 10px 0;
+}
+
+.social-links img {
+    width: 20px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+main {
+    margin-left: 220px; /* Adjust based on sidebar width */
+    padding: 20px;
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
 }
