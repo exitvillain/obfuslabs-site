@@ -1,55 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>exitvillain</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>exitvillain</title>
+  <!-- Font Awesome CDN -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-p9+a3Zg3KcFn9tm8mxfq2CA1iShtk0z0a8RskfOAdSfRBDvhUZV2Vv1OzC+pjn/t35+7ejoqdGWoO6zU1b9Xag=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="nav-left">
-                <span class="prompt">>echo $USER: <span class="user">exitvillain</span>_</span>
-            </div>
-            <div class="nav-right">
-                <a href="#home">Home</a>
-                <a href="#cyber-cert-corner">Cyber Cert Corner</a>
-                <a href="#currently-working-on">Currently Working On This</a>
-                <a href="https://gothamsonic.com" target="_blank">Gotham Sonic</a>
-            </div>
-        </nav>
-    </header>
+  <header>
+    <nav class="navbar">
+      <div class="nav-left">
+        <span class="prompt">&gt; echo $USER: <span class="user">exitvillain</span><span class="cursor">_</span></span>
+      </div>
+      <div class="nav-right">
+        <a href="#home">Home</a>
+        <a href="#cyber-cert-corner">Cyber Cert Corner</a>
+        <a href="#currently-working-on">Currently Working On</a>
+        <a href="https://gothamsonic.com" target="_blank">Gotham Sonic</a>
+      </div>
+    </nav>
+  </header>
 
-    <aside class="sidebar">
-        <div class="profile">
-            <img src="your-profile-image-url" alt="Profile Picture">
-            <h2>Daniel Gray</h2>
-            <p>Cybersecurity Engineer & Software Engineer</p>
-        </div>
-        <ul class="social-links">
-            <li><a href="https://github.com/yourusername" target="_blank"><img src="github-logo-url" alt="GitHub"> GitHub</a></li>
-            <li><a href="https://twitter.com/yourusername" target="_blank"><img src="twitter-logo-url" alt="Twitter"> Twitter</a></li>
-            <li><a href="https://hackerone.com/yourusername" target="_blank"><img src="hackerone-logo-url" alt="HackerOne"> HackerOne</a></li>
-            <li><a href="https://tryhackme.com/p/yourusername" target="_blank"><img src="tryhackme-logo-url" alt="TryHackMe"> TryHackMe</a></li>
-        </ul>
-    </aside>
+  <aside class="sidebar">
+    <div class="profile">
+      <img src="your-profile-image-url.jpg" alt="Profile Picture">
+      <h2>Daniel Gray</h2>
+      <p>Cybersecurity Engineer & Software Engineer</p>
+    </div>
+    <ul class="social-links">
+      <li>
+        <a href="https://github.com/yourusername" target="_blank">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+      </li>
+      <li>
+        <a href="https://twitter.com/yourusername" target="_blank">
+          <i class="fab fa-twitter"></i> Twitter
+        </a>
+      </li>
+      <li>
+        <a href="https://hackerone.com/yourusername" target="_blank">
+          <i class="fas fa-hands-helping"></i> HackerOne
+        </a>
+      </li>
+      <li>
+        <a href="https://tryhackme.com/p/yourusername" target="_blank">
+          <i class="fas fa-user-secret"></i> TryHackMe
+        </a>
+      </li>
+    </ul>
+  </aside>
 
-    <main>
-        <section id="home">
+  <main>
+     <section id="home">
             <h1>exit_villain</h1>
             <p>a.k.a Daniel Gray</p>
             <h3 style="color: #39FF14;">Cybersecurity Engineer & Software Engineer</h3>
             <p>Hi! I'm Daniel Gray, a versatile software developer with a Physics degree from Columbia University (2011) and a Master's degree in Computer Science from NYU (2022). Not just a web developer, I am a jack of all trades with interests in cybersecurity and artificial intelligence.</p>
             <p>My hacker alias is exitvillain. You can find exitvillain on HackerOne, Bugcrowd, HackTheBox, TryHackMe, and GitHub.</p>
         </section>
-   <h2 style="color: #8A2BE2">About My Video Series</h2>
-        <p style="color: blue;">I am creating a series on binary exploitation and reverse engineering. In this series, we'll take a unique approach by slowing things down to walk through the assembly of a simple piece of C code, step by step, instruction by instruction. We'll use an innovative demo involving an Excel spreadsheet, where each cell represents a memory location, to visualize data movement in and out of CPU registers.</p>
+
+      <h2 style="color: #8A2BE2">About My Video Series</h2>
+        <p style="color: neonGreen;">I am creating a series on binary exploitation and reverse engineering. In this series, we'll take a unique approach by slowing things down to walk through the assembly of a simple piece of C code, step by step, instruction by instruction. We'll use an innovative demo involving an Excel spreadsheet, where each cell represents a memory location, to visualize data movement in and out of CPU registers.</p>
 
 <p style="color: neonGreen;">Our journey begins by taking high-level C code and using Godbolt.org to generate its assembly code. We'll then transfer this assembly into our spreadsheet model—our virtual RAM—with dedicated sections to emulate CPU registers like RIP, RSP, and RBP.</p> 
 
         <h3 style="color: #39FF14;">Watch the First Part of the Series:</h3>
-       <h3 style="color: blue; text-align: center;">Intro to Reverse Engineering Part 1: Demystifying the Call Stack</h3>
+       <h3 style="color: #8A2BE2; text-align: center;">Intro to Reverse Engineering Part 1: Demystifying the Call Stack</h3>
 
 
         <div class="video-container">
@@ -57,9 +82,43 @@
         </div>
         <p></p>We'll then transfer this assembly into our spreadsheet model—our virtual RAM—with dedicated sections to emulate CPU registers like RIP, RSP, and RBP. We'll meticulously walk through each instruction, explaining how function calls are handled, how arguments are passed and returned, and laying the groundwork for understanding more complex concepts in upcoming videos. This series will gradually build up to exploring control structures like loops and delve into buffer overflow attacks, alongside tools like Ghidra, Binary Ninja, and GEF for static and dynamic analysis.</p>
 
+
         <section id="currently-working-on">
             <h2 style="color: #8A2BE2">Currently Working On</h2>
-            <p>the CRTO (Certified Red Team Operator) by ZeroPoint Security</p>
+            <p>Details about your current project or work.</p>
+        </section>
+
+        <section id="cyber-cert-corner">
+            <h2 style="color: #8A2BE2">Certification Corner</h2>
+            <p>In this video, I'll guide you through how to pass the Practical Network Penetration Tester (PNPT) exam by TCM Security, covering key aspects such as OSINT, Active Directory exploitation, A/V and egress bypassing, and network pivoting to ultimately compromise the Domain Controller. I'll also share insights on preparing a professional report and delivering a live debrief to senior penetration testers. Additionally, I'll provide a review of the exam and discuss some of the critical concepts you need to master.</p>
+            <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/qOk1YnxT-EA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </section>
+  
+  </main>
+
+  <!-- Optional JavaScript for Blinking Cursor -->
+  <script>
+    const cursor = document.querySelector('.cursor');
+    setInterval(() => {
+      cursor.style.opacity = (cursor.style.opacity == '0') ? '1' : '0';
+    }, 500);
+  </script>
+</body>
+</html>
+
+ <section id="home">
+            <h1>exit_villain</h1>
+            <p>a.k.a Daniel Gray</p>
+            <h3 style="color: #39FF14;">Cybersecurity Engineer & Software Engineer</h3>
+            <p>Hi! I'm Daniel Gray, a versatile software developer with a Physics degree from Columbia University (2011) and a Master's degree in Computer Science from NYU (2022). Not just a web developer, I am a jack of all trades with interests in cybersecurity and artificial intelligence.</p>
+            <p>My hacker alias is exitvillain. You can find exitvillain on HackerOne, Bugcrowd, HackTheBox, TryHackMe, and GitHub.</p>
+        </section>
+
+        <section id="currently-working-on">
+            <h2 style="color: #8A2BE2">Currently Working On</h2>
+            <p>Details about your current project or work.</p>
         </section>
 
         <section id="cyber-cert-corner">
