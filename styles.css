@@ -108,7 +108,7 @@ a {
 
 /* Main Content Styles */
 main {
-  margin: 20px 15px 20px 260px; /* Adjust margins considering navbar and sidebar */
+  margin: 30px 15px 20px 260px; /* Adjust margins considering navbar and sidebar */
    padding: 2px 20px 20px 20px;
 }
 
