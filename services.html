@@ -1,0 +1,71 @@
+<!-- services.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Services – ObfusLabs</title>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 3rem;
+      line-height: 1.6;
+    }
+    a {
+      color: #00FF00;
+      text-decoration: underline;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      letter-spacing: 0.6rem;
+      display: flex;
+    }
+    .char {
+      display: inline-block;
+      transition: color 0.3s;
+    }
+
+    .char.red {
+      color: #FF2B63;
+    }
+  </style>
+</head>
+<body>
+    <div class="logo">
+    <span class="char">O</span>
+    <span class="char red">B</span>
+    <span class="char">F</span>
+    <span class="char" id="glitch-letter">Ʞ</span>
+    <span class="char">S</span>
+    <span class="char">L</span>
+    <span class="char">Δ</span>
+    <span class="char red">B</span>
+    <span class="char">S</span>
+  </div>
+  <h1>Need a pentest? Or just wanna see if you’re hackable?</h1>
+  <p>We specialize in offensive security engagements. Whether you're a startup or an established organization, we can help you find weaknesses before attackers do.</p>
+  <p>Our services include:</p>
+  <ul>
+    <li>Web application penetration testing</li>
+    <li>Internal network assessments and red team operations</li>
+    <li>Cloud and Active Directory security reviews</li>
+    <li>Social engineering simulations and phishing campaigns</li>
+    <li>Physical (on the premesis!) penetration tests</li>
+  </ul>
+  <p>All assessments are conducted with a deep understanding of adversarial tactics, custom tooling, and post-exploitation scenarios.</p>
+  <p>To get in touch, email <a href="mailto:daniel.gray@obfuslabs.com">daniel.gray@obfuslabs.com</a>.</p>
+</body>
+<script>
+    const glitch = document.getElementById('glitch-letter');
+    const states = ['█', 'Ʞ', 'U'];
+    let i = 0;
+
+    setInterval(() => {
+      glitch.textContent = states[i % states.length];
+      i++;
+    }, 700);
+  </script>
+
+</html>
