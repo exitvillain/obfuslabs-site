@@ -1,0 +1,71 @@
+<!-- exit.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Daniel Gray – ExitVillain</title>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 3rem;
+      line-height: 1.6;
+    }
+    a {
+      color: #00FF00;
+      text-decoration: underline;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      letter-spacing: 0.6rem;
+      display: flex;
+    }
+
+    .char {
+      display: inline-block;
+      transition: color 0.3s;
+    }
+
+    .char.red {
+      color: #FF2B63;
+    }
+  </style>
+</head>
+<body>
+<div class="logo">
+    <span class="char">O</span>
+    <span class="char red">B</span>
+    <span class="char">F</span>
+    <span class="char" id="glitch-letter">Ʞ</span>
+    <span class="char">S</span>
+    <span class="char">L</span>
+    <span class="char">Δ</span>
+    <span class="char red">B</span>
+    <span class="char">S</span>
+  </div>
+
+  <h2 style="text-align: center;">Meet Dan Gray aka exitvillain</h2>
+  <p>Daniel studied physics as an undergraduate at Columbia University. Later, he earned a Master’s in Computer Science from NYU, where he studied distributed systems, operating systems, databases, machine learning, and several advanced security topics — including application security, network security, and offensive security. He also served as a teaching assistant for NYU's flagship graduate course, Internet Security and Privacy.</p>
+
+  <p>While at NYU, Daniel was part of the OSIRIS cybersecurity research lab at the Tandon School of Engineering, where he contributed to hands-on offensive security research, internal tooling, and advanced red team scenarios.</p>
+
+  <p>Daniel holds red teaming certifications from three of the industry's top cybersecurity companies: Altered Security (CRTP), TCM Security (PNPT), and Zero-Point Security (CRTO). Each certification focused on a different aspect of Active Directory attacks — from living off the land with PowerShell and Silver C2, to Kali-based internal network attacks, to full-scale operations using Cobalt Strike.</p>
+  
+  <p>He is currently sharpening his skills in malware reverse engineering and exploit development through the RET2 Systems wargame platform, diving deep into memory corruption, shellcode, and system-level exploitation.</p>
+
+  <p>You can contact Daniel at <a href="mailto:daniel.gray@obfuslabs.com">daniel.gray@obfuslabs.com</a> or visit his site at <a href="https://exitvillain.com" target="_blank">exitvillain.com</a> where he runs a hacker forum and other projects.</p>
+</body>
+<script>
+    const glitch = document.getElementById('glitch-letter');
+    const states = ['█', 'Ʞ', 'U'];
+    let i = 0;
+
+    setInterval(() => {
+      glitch.textContent = states[i % states.length];
+      i++;
+    }, 700);
+  </script>
+
+</html>
