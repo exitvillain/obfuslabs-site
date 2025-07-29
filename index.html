@@ -17,6 +17,22 @@
       margin: 0;
     }
 
+    #matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background: #0a0a0a;
+    }
+
+    .logo, .tagline, .nav {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 1;
+    }
+
     .logo {
       font-size: 3.0rem;
       letter-spacing: 0.6rem;
@@ -61,7 +77,7 @@
     .nav a:hover {
       text-decoration: underline;
     }
-    
+
     #glitch-letter {
       display: inline-block;
       height: 1em;
@@ -74,20 +90,22 @@
   </style>
 </head>
 <body>
+  <canvas id="matrix"></canvas>
+
   <div class="logo">
     <span class="char">O</span>
     <span class="char red">B</span>
     <span class="char">F</span>
-    <span class="char" id="glitch-letter">Ʞ</span>
+    <span class="char" id="glitch-letter">ʞ</span>
     <span class="char">S</span>
     <span class="char">L</span>
     <span class="char">Δ</span>
     <span class="char red">B</span>
     <span class="char">S</span>
   </div>
- <br><br>
+
+  <br><br>
   <div class="tagline">Obfuscation. Evasion. Offensive Security. — NYC</div>
-  
 
   <div class="nav">
     <p><a href="/services">Need a pentest? Or just wanna see if you’re hackable?</a></p>
@@ -100,11 +118,49 @@
     const glitch = document.getElementById('glitch-letter');
     const states = ['█', 'ʞ', 'U'];
     let i = 0;
-
     setInterval(() => {
       glitch.textContent = states[i % states.length];
       i++;
     }, 700);
+
+    // Matrix animation
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const letters = '01+×=■%▚░▓█▌☰!@#$%^&*abcdef'.split('');
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array.from({ length: columns }, () => 1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(10,10,10,0.15)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.font = `${fontSize}px Fira Mono`;
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        const isRed = Math.random() < 0.02;
+        ctx.fillStyle = isRed ? '#FF2B63' : (Math.random() < 0.2 ? '#777' : '#f0f0f0');
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    const interval = setInterval(draw, 40);
+
+    setTimeout(() => {
+      clearInterval(interval);
+      canvas.style.display = 'none';
+      document.querySelector('.logo').style.opacity = 1;
+      document.querySelector('.tagline').style.opacity = 1;
+      document.querySelector('.nav').style.opacity = 1;
+    }, 2000);
   </script>
 </body>
 </html>
