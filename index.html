@@ -38,7 +38,13 @@
       z-index: 10000;
       pointer-events: none;
       opacity: 1;
-      transition: opacity 0.4s ease;
+      animation: flicker 1.5s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 0.85; }
+      50% { opacity: 0.3; }
+      100% { opacity: 0.85; }
     }
 
     .logo, .tagline, .nav {
@@ -138,7 +144,6 @@
       i++;
     }, 700);
 
-    // Matrix animation
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -147,7 +152,10 @@
     const letters = '01+×=■%▚░▓█▌☰!@#$%^&*abcdef'.split('');
     const fontSize = 16;
     const columns = Math.floor(canvas.width / fontSize);
-    const columnWidths = Array.from({ length: columns }, () => fontSize * (Math.random() < 0.05 ? 2 : 1));
+    const columnWidths = Array.from({ length: columns }, () => {
+      const r = Math.random();
+      return fontSize * (r < 0.02 ? 4 : r < 0.07 ? 2 : 1);
+    });
     const drops = Array.from({ length: columns }, () => 1);
 
     function draw() {
