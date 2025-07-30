@@ -27,6 +27,20 @@
       background: #0a0a0a;
     }
 
+    #overlay-text {
+      position: fixed;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #FF2B63;
+      font-size: 1.2rem;
+      font-family: 'Fira Mono', monospace;
+      z-index: 10000;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+    }
+
     .logo, .tagline, .nav {
       opacity: 0;
       transition: opacity 0.5s ease;
@@ -91,6 +105,7 @@
 </head>
 <body>
   <canvas id="matrix"></canvas>
+  <div id="overlay-text">ACCESSING: obfuslabs.com...</div>
 
   <div class="logo">
     <span class="char">O</span>
@@ -131,7 +146,8 @@
 
     const letters = '01+×=■%▚░▓█▌☰!@#$%^&*abcdef'.split('');
     const fontSize = 16;
-    const columns = canvas.width / fontSize;
+    const columns = Math.floor(canvas.width / fontSize);
+    const columnWidths = Array.from({ length: columns }, () => fontSize * (Math.random() < 0.05 ? 2 : 1));
     const drops = Array.from({ length: columns }, () => 1);
 
     function draw() {
@@ -157,6 +173,7 @@
     setTimeout(() => {
       clearInterval(interval);
       canvas.style.display = 'none';
+      document.getElementById('overlay-text').style.opacity = 0;
       document.querySelector('.logo').style.opacity = 1;
       document.querySelector('.tagline').style.opacity = 1;
       document.querySelector('.nav').style.opacity = 1;
