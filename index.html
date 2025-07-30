@@ -38,7 +38,7 @@
       z-index: 10000;
       pointer-events: none;
       opacity: 1;
-      animation: flicker 1.5s infinite alternate;
+      transition: opacity 0.4s ease;
     }
 
     @keyframes flicker {
@@ -111,6 +111,7 @@
 </head>
 <body>
   <canvas id="matrix"></canvas>
+  <div id="overlay-text">ACCESSING: obfuslabs.com...</div>
 
 
   <div class="logo">
