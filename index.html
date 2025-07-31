@@ -107,27 +107,12 @@
       top: 0.05em;
       transition: all 0.2s ease-in-out;
     }
-
-    /* Mobile styles */
-    @media (max-width: 600px) {
-      .logo {
-        font-size: 4rem;
-      }
-      .tagline {
-        font-size: 2rem;
-      }
-      .subtext, .nav {
-        font-size: 2.5rem;
-      }
-      #overlay-text {
-        font-size: 3.0rem;
-      }
-    }
   </style>
 </head>
 <body>
   <canvas id="matrix"></canvas>
   <div id="overlay-text">ACCESSING: obfuslabs.com...</div>
+
 
   <div class="logo">
     <span class="char">O</span>
@@ -145,7 +130,7 @@
   <div class="tagline">Obfuscation. Evasion. Offensive Security. — NYC</div>
 
   <div class="nav">
-    <p><a href="/services">Need a pentest? Or just wanna see if you’re hackable?</a></p>
+    <p><a href="/services">Need a pentest? Or just want to see if you’re hackable?</a></p>
     <br><br>
     <p> Members:</p>
     <p><a href="/exit">exitvillain</a></p>
@@ -177,12 +162,14 @@
     function draw() {
       ctx.fillStyle = 'rgba(10,10,10,0.15)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
       ctx.font = `${fontSize}px Fira Mono`;
       for (let i = 0; i < drops.length; i++) {
         const text = letters[Math.floor(Math.random() * letters.length)];
         const isRed = Math.random() < 0.02;
         ctx.fillStyle = isRed ? '#FF2B63' : (Math.random() < 0.2 ? '#777' : '#f0f0f0');
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
@@ -203,4 +190,5 @@
   </script>
 </body>
 </html>
+
   
