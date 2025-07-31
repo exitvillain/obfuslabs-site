@@ -108,28 +108,25 @@
       top: 0.05em;
       transition: all 0.2s ease-in-out;
     }
-
-         /* Mobile styles */
-    @media (max-width: 550px) {
-      body {
-        font-size: 60px;
-      }
-      .logo {
-          font-size: 100rem;
-      }
-      .tagline {
-          font-size: 40px;
-      }
-      .subtext, .nav {
-          font-size: 30px;
-      }
-      #overlay-text {
-          font-size: 28px;
-      }
-    }
-
     
   </style>
+
+    <script>
+      // JavaScript-based fallback for device detection
+      const isMobile = window.innerWidth <= 600;
+      if (isMobile) {
+        document.addEventListener('DOMContentLoaded', () => {
+          document.querySelector('.logo').style.fontSize = '64px';
+          document.querySelector('.tagline').style.fontSize = '24px';
+          document.querySelectorAll('.subtext, .nav').forEach(el => {
+            el.style.fontSize = '22px';
+            el.style.marginTop = '-10px';
+          });
+          document.getElementById('overlay-text').style.fontSize = '26px';
+        });
+      }
+    </script>
+  
 </head>
 <body>
   <canvas id="matrix"></canvas>
