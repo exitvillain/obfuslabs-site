@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
   <title>ObfusLabs</title>
-  <link rel="icon" type="image/png" href="favicon.png">
   <style>
     body {
       overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       background-color: #0a0a0a;
       color: #f0f0f0;
-      font-family: 'Courier New', Courier, monospace;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -41,7 +42,7 @@
       z-index: 10000;
       pointer-events: none;
       opacity: 1;
-      transition: opacity 0.4s ease;
+      animation: flicker 1.5s infinite alternate;
     }
 
     @keyframes flicker {
@@ -57,7 +58,7 @@
     }
 
     .logo {
-      font-size: 3.0rem;
+      font-size: 48px;
       letter-spacing: 0.6rem;
       display: flex;
     }
@@ -74,20 +75,20 @@
     .tagline {
       margin-top: 1.5rem;
       text-align: center;
-      font-size: 1rem;
+      font-size: 20px;
       color: #999;
     }
 
     .subtext {
       margin-top: 0.5rem;
       text-align: center;
-      font-size: 0.95rem;
+      font-size: 18px;
       color: #777;
     }
 
     .nav {
       margin-top: 2rem;
-      font-size: 1rem;
+      font-size: 18px;
       text-align: center;
     }
 
@@ -101,22 +102,6 @@
       text-decoration: underline;
     }
 
-    .nav2 {
-      margin-top: 2rem;
-      font-size: 2rem;
-      text-align: center;
-    }
-
-    .nav2 a {
-      color: white;
-      text-decoration: none;
-      margin: 0 1rem;
-    }
-
-    .nav2 a:hover {
-      text-decoration: underline;
-    }
-
     #glitch-letter {
       display: inline-block;
       height: 1em;
@@ -126,9 +111,31 @@
       top: 0.05em;
       transition: all 0.2s ease-in-out;
     }
-    
-  </style>
 
+    $1
+  .tagline {
+    font-size: 24px;
+    margin-top: -20px;
+  }
+  .subtext, .nav {
+    font-size: 22px;
+    margin-top: -10px;
+  }
+  #overlay-text {
+    font-size: 26px;
+  }
+}
+      .tagline {
+        font-size: 24px;
+      }
+      .subtext, .nav {
+        font-size: 22px;
+      }
+      #overlay-text {
+        font-size: 26px;
+      }
+    }
+      </style>
     <script>
       // JavaScript-based fallback for device detection
       function isMobileDevice() {
@@ -141,47 +148,42 @@
 const isMobile = isMobileDevice();
       if (isMobile) {
         document.addEventListener('DOMContentLoaded', () => {
-          document.querySelector('.logo').style.fontSize = '100px';
-          document.querySelector('.tagline').style.fontSize = '30px';
+          document.querySelector('.logo').style.fontSize = '64px';
+          document.querySelector('.tagline').style.fontSize = '24px';
+          document.querySelector('.tagline').style.marginTop = '-20px';
           document.querySelectorAll('.subtext, .nav').forEach(el => {
-            el.style.fontSize = '30px';
-          
+            el.style.fontSize = '22px';
+            el.style.marginTop = '-10px';
           });
-          document.getElementById('overlay-text').style.fontSize = '40px';
+          document.getElementById('overlay-text').style.fontSize = '26px';
         });
       }
     </script>
-  
 </head>
 <body>
   <canvas id="matrix"></canvas>
-  <div id="overlay-text">ACCESSING: obfuslabs.com...</div>
-
+  
 
   <div class="logo">
-    <span class="char">O</span>
-    <span class="char red">B</span>
-    <span class="char">F</span>
-    <span class="char" id="glitch-letter">ʞ</span>
-    <span class="char">S</span>
-    <span class="char">L</span>
-    <span class="char">Δ</span>
-    <span class="char red">B</span>
-    <span class="char">S</span>
-  </div>
+  <span class="char">O</span>
+  <span class="char red">B</span>
+  <span class="char">F</span>
+  <span class="char">ʞ</span>
+  <span class="char">S</span>
+  <span class="char">L</span>
+  <span class="char">Δ</span>
+  <span class="char red">B</span>
+  <span class="char">S</span>
+</div>
 
   <br><br>
   <div class="tagline">Obfuscation. Evasion. Offensive Security. — NYC</div>
 
   <div class="nav">
-    <p><a href="/services">Need a pentest? Or just want to see if you’re hackable?</a></p>
+    <p><a href="/services">Need a pentest? Or just wanna see if you’re hackable?</a></p>
     <br><br>
     <p> Members:</p>
     <p><a href="/exit">exitvillain</a></p>
-  </div>
-  <br><br>
-  <div class="nav2">
-    
   </div>
 
   <script>
@@ -210,14 +212,12 @@ const isMobile = isMobileDevice();
     function draw() {
       ctx.fillStyle = 'rgba(10,10,10,0.15)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
       ctx.font = `${fontSize}px Fira Mono`;
       for (let i = 0; i < drops.length; i++) {
         const text = letters[Math.floor(Math.random() * letters.length)];
         const isRed = Math.random() < 0.02;
         ctx.fillStyle = isRed ? '#FF2B63' : (Math.random() < 0.2 ? '#777' : '#f0f0f0');
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
@@ -226,6 +226,22 @@ const isMobile = isMobileDevice();
     }
 
     const interval = setInterval(draw, 40);
+
+    document.querySelectorAll('.nav a').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    canvas.style.display = 'block';
+    let countdown = 0;
+    const quickDraw = setInterval(() => {
+      draw();
+      if (++countdown >= 50) {
+        clearInterval(quickDraw);
+        window.location.href = link.href;
+      }
+    }, 40);
+  });
+});
+    });
 
     setTimeout(() => {
       clearInterval(interval);
