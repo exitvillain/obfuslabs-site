@@ -114,11 +114,15 @@
 
     <script>
       // JavaScript-based fallback for device detection
-      const isMobile = window.innerWidth <= 600;
+      function isMobileDevice() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+}
+const isMobile = isMobileDevice();
       if (isMobile) {
         document.addEventListener('DOMContentLoaded', () => {
           document.querySelector('.logo').style.fontSize = '64px';
           document.querySelector('.tagline').style.fontSize = '24px';
+          document.querySelector('.tagline').style.marginTop = '-20px';
           document.querySelectorAll('.subtext, .nav').forEach(el => {
             el.style.fontSize = '22px';
             el.style.marginTop = '-10px';
