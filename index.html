@@ -180,7 +180,7 @@ const isMobile = isMobileDevice();
     canvas.height = window.innerHeight;
 
     const letters = '01+×=■%▚░▓█▌☰!@#$%^&*abcdef'.split('');
-    const fontSize = 32;
+    const fontSize = isMobile ? 64 : 32; // wider columns on mobile
     const columns = Math.floor(canvas.width / fontSize);
     const columnWidths = Array.from({ length: columns }, () => {
       const r = Math.random();
