@@ -1,0 +1,68 @@
+<!-- denomin8r.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>J. B – denomin8r</title>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 3rem;
+      line-height: 1.6;
+    }
+    a {
+      color: #00FF00;
+      text-decoration: underline;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      letter-spacing: 0.6rem;
+      display: flex;
+      text-align: center;
+    }
+
+    .char {
+      display: inline-block;
+      transition: color 0.3s;
+    }
+
+    .char.red {
+      color: #FF2B63;
+    }
+  </style>
+</head>
+<body>
+<div class="logo">
+    <span class="char">O</span>
+    <span class="char red">B</span>
+    <span class="char">F</span>
+    <span class="char" id="glitch-letter">Ʞ</span>
+    <span class="char">S</span>
+    <span class="char">L</span>
+    <span class="char">Δ</span>
+    <span class="char red">B</span>
+    <span class="char">S</span>
+  </div>
+
+  <h2 style="text-align: center;">Meet J. B aka denomin8r</h2>
+  <h3>Engineer. Hacker. Artist.</h3>
+  <p>J. B, known as <strong>denomin8r</strong>, works in cybersecurity at a major financial institution while also pursuing artistic projects that bridge the digital and physical. His background spans application security, infrastructure, and creative offensive security research.</p>
+
+  <p>As an artist, denomin8r debuted his solo exhibition <em>"I Am Cutting In A Computer"</em> at Chance Studios in Brooklyn, a showcase blending analog collage with custom Python libraries to challenge ideas of consumerism in the digital age.</p>
+
+  <p>You can find his work at <a href="https://github.com/josephbertino" target="_blank">github.com/josephbertino</a>.</p>
+</body>
+<script>
+    const glitch = document.getElementById('glitch-letter');
+    const states = ['█', 'ʞ', 'U'];
+    let i = 0;
+
+    setInterval(() => {
+      glitch.textContent = states[i % states.length];
+      i++;
+    }, 700);
+  </script>
+</html>
