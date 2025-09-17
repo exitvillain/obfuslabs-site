@@ -1,0 +1,125 @@
+<!-- ret2systems.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>RET2 WarGames — Fundamentals of Software Exploitation – ObfusLabs</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 3rem;
+      line-height: 1.6;
+      max-width: 980px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    a { color: #00FF00; text-decoration: underline; }
+    .logo { font-size: 2.2rem; letter-spacing: 0.6rem; display:flex; margin-bottom:1rem; }
+    .char { display:inline-block; transition: color 0.3s; }
+    .char.red { color: #FF2B63; }
+    header { margin-bottom: 1rem; }
+    .post {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.03);
+      padding: 1.5rem;
+    }
+    .meta { color:#9a9a9a; font-size:0.9rem; margin-bottom:1rem; }
+    .hero-img {
+      width:100%;
+      height:320px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#7a7a7a;
+      border: 1px dashed rgba(255,255,255,0.03);
+      margin: 0.8rem 0 1.25rem 0;
+    }
+    .content h2 { margin-top:0.25rem; }
+    .course-list { margin:0.5rem 0 1rem 1.1rem; }
+    .badge {
+      display:inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      background: rgba(0,255,0,0.06);
+      color:#bfffbf;
+      font-size:0.85rem;
+      margin-left:0.5rem;
+    }
+    .back { margin-top:1rem; display:inline-block; }
+    .note { color:#bfbfbf; font-size:0.95rem; margin-top:1rem; }
+  </style>
+</head>
+<body>
+  <div class="logo" aria-hidden="true">
+    <span class="char">O</span>
+    <span class="char red">B</span>
+    <span class="char">F</span>
+    <span class="char" id="glitch-letter">Ʞ</span>
+    <span class="char">S</span>
+    <span class="char">L</span>
+    <span class="char">Δ</span>
+    <span class="char red">B</span>
+    <span class="char">S</span>
+  </div>
+
+  <header>
+    <h1>RET2 WarGames</h1>
+    <div class="meta">Fundamentals of Software Exploitation — course notes & lab progress</div>
+  </header>
+
+  <article class="post">
+    <div class="meta">Just another Friday night at ObfusLabs. We are working on the Fundamentals of Software Exploitation training by RET2 Systems. We analyze 64-bit Linux executables and build python-based exploits against them.</div>
+
+    <div class="hero-img" id="image-placeholder">
+      <!-- IMAGE SPOT: replace this entire div's contents with an <img src="..."> tag when you upload a screenshot -->
+      <div>
+        <div style="font-size:0.95rem">IMAGE PLACEHOLDER</div>
+        <div style="font-size:0.8rem; color:#8a8a8a;">Replace with a screenshot or photo of your lab output (e.g., GDB, flag capture)</div>
+      </div>
+    </div>
+
+    <section class="content">
+      <h2>Progress</h2>
+      <p class="note"><strong>Latest:</strong> solved Mission 1, currently on the <em>Stack Cookies</em> lesson (third lesson). Captured another flag today.</p>
+
+      <h2>About the course</h2>
+      <p>RET2 Systems' <em>Fundamentals of Software Exploitation</em> trains students to read and reason about C/C++ programs, reverse engineer 64-bit Linux binaries, and craft python exploits to demonstrate and bypass modern mitigations.</p>
+
+      <ul class="course-list">
+        <li><strong>Focus:</strong> x86-64 assembly, ELF analysis, exploit development</li>
+        <li><strong>Mitigations covered:</strong> Stack Cookies, DEP (NX), ASLR, PIE</li>
+        <li><strong>Techniques taught:</strong> Shellcoding, ROP, stack pivoting, information leaks</li>
+        <li><strong>Bug classes:</strong> Heap overflows, use-after-free, integer issues, race conditions</li>
+        <li><strong>Outcome:</strong> ability to do independent vulnerability research against closed-source apps</li>
+      </ul>
+
+      <h2>Why I'm doing this</h2>
+      <p>Building low-level exploit skills is central to my offensive security research — it sharpens debugging chops, deepens understanding of C internals, and produces concrete artifacts (exploit scripts, PoCs) I can reuse in assessments and writeups.</p>
+
+      <h2>Notes / links</h2>
+      <p><a href="#">Course: RET2 Systems — Fundamentals of Software Exploitation</a> <span class="badge">WarGames</span></p>
+      <p class="small">Suggested prerequisites: familiarity with C &amp; Python, ELF, GDB, and basic assembly. I'll post flags / writeups here as feasible.</p>
+
+      <p class="back"><a href="current-research.html">← Back to Current Research</a></p>
+    </section>
+  </article>
+
+  <footer style="margin-top:2rem; color:#7a7a7a;">
+    <p>Questions or collabs: <a href="mailto:daniel.gray@obfuslabs.com">daniel.gray@obfuslabs.com</a></p>
+  </footer>
+
+<script>
+  const glitch = document.getElementById('glitch-letter');
+  const states = ['█', 'ʞ', 'U'];
+  let i = 0;
+  setInterval(() => {
+    glitch.textContent = states[i % states.length];
+    i++;
+  }, 700);
+</script>
+</body>
+</html>
