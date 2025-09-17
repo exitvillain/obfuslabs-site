@@ -32,10 +32,19 @@
     .char.red {
       color: #FF2B63;
     }
+
+    /* dark-grey panel matching the other pages */
+    .panel {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.03);
+      padding: 1.25rem;
+      margin-top: 1.25rem;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body>
-<div class="logo">
+  <div class="logo">
     <span class="char">O</span>
     <span class="char red">B</span>
     <span class="char">F</span>
@@ -47,24 +56,27 @@
     <span class="char">S</span>
   </div>
 
-  <h2 style="text-align: center;">Meet J. B aka denomin8r</h2>
-  <h3>Engineer. Hacker. Artist.</h3>
+  <section class="panel">
+    <h2 style="text-align: center;">Meet J. B aka denomin8r</h2>
+    <h3>Engineer. Hacker. Artist.</h3>
 
-<p>Exitvillain asked denomin8r to join ObfusLabs and was ecstatic when he said yes — because denomin8r has been programming longer and brings an incredible depth of knowledge in both security and software. His experience, creativity, and technical edge raise the bar for the whole collective.</p>
+    <p>Exitvillain asked denomin8r to join ObfusLabs and was ecstatic when he said yes — because denomin8r has been programming longer and brings an incredible depth of knowledge in both security and software. His experience, creativity, and technical edge raise the bar for the whole collective.</p>
 
-<p>J. B, known as <strong>denomin8r</strong>, works as a senior software engineer at a major financial institution while also pursuing artistic projects that bridge the digital and physical. His background spans application security, infrastructure, and creative offensive security research.</p>
+    <p>J. B, known as <strong>denomin8r</strong>, works as a senior software engineer at a major financial institution while also pursuing artistic projects that bridge the digital and physical. His background spans application security, infrastructure, and creative offensive security research.</p>
 
-<p>As an artist, denomin8r debuted his solo exhibition <em>"I Am Cutting In A Computer"</em> at Chance Studios in Brooklyn — a showcase blending analog collage with custom Python libraries to challenge ideas of consumerism in the digital age.</p>
-<p>  You can find his work at <a>github.com/josephbertino.</a></p>
-</body>
+    <p>As an artist, denomin8r debuted his solo exhibition <em>"I Am Cutting In A Computer"</em> at Chance Studios in Brooklyn — a showcase blending analog collage with custom Python libraries to challenge ideas of consumerism in the digital age.</p>
+
+    <p>You can find his work at <a href="https://github.com/josephbertino" target="_blank">github.com/josephbertino</a>.</p>
+  </section>
+
 <script>
-    const glitch = document.getElementById('glitch-letter');
-    const states = ['█', 'ʞ', 'U'];
-    let i = 0;
-
-    setInterval(() => {
-      glitch.textContent = states[i % states.length];
-      i++;
-    }, 700);
-  </script>
+  const glitch = document.getElementById('glitch-letter');
+  const states = ['█', 'ʞ', 'U'];
+  let i = 0;
+  setInterval(() => {
+    glitch.textContent = states[i % states.length];
+    i++;
+  }, 700);
+</script>
+</body>
 </html>
