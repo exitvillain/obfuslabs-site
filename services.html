@@ -17,10 +17,45 @@
       text-decoration: underline;
     }
 
+    /* logo + pattern */
+    .logo-wrapper {
+      position: relative;
+      display: inline-block; /* shrink-wrap to the logo width */
+      margin-bottom: 1rem;
+    }
+
+    /* the pattern: a subtle grid of tiny rectangles */
+    .logo-wrapper::before {
+      content: "";
+      position: absolute;
+      left: -18px;    /* expand a little beyond the letters */
+      top: -12px;
+      right: -18px;
+      bottom: -12px;
+      z-index: -1;    /* behind the letters */
+      pointer-events: none;
+
+      /* base faint panel color (keeps the same dark grey vibe) */
+      background-color: rgba(255,255,255,0.02);
+
+      /* tiled rectangles: a pair of linear-gradients creates a square grid */
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,0.02) 0 6px, transparent 6px),
+        linear-gradient(180deg, rgba(255,255,255,0.02) 0 6px, transparent 6px);
+
+      /* size of each tile (adjust to taste) */
+      background-size: 36px 36px, 36px 36px;
+
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.005) inset;
+    }
+
     .logo {
       font-size: 2.5rem;
       letter-spacing: 0.6rem;
       display: flex;
+      align-items: center;
     }
     .char {
       display: inline-block;
@@ -30,42 +65,59 @@
     .char.red {
       color: #FF2B63;
     }
+
+    /* dark-grey panel to match other pages */
+    .panel {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.03);
+      padding: 1.25rem;
+      margin-top: 1.25rem;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body>
-    <div class="logo">
-    <span class="char">O</span>
-    <span class="char red">B</span>
-    <span class="char">F</span>
-    <span class="char" id="glitch-letter">Ʞ</span>
-    <span class="char">S</span>
-    <span class="char">L</span>
-    <span class="char">Δ</span>
-    <span class="char red">B</span>
-    <span class="char">S</span>
+  <!-- wrap the logo in a wrapper so the pattern sits behind it only -->
+  <div class="logo-wrapper">
+    <div class="logo" aria-hidden="true">
+      <span class="char">O</span>
+      <span class="char red">B</span>
+      <span class="char">F</span>
+      <span class="char" id="glitch-letter">Ʞ</span>
+      <span class="char">S</span>
+      <span class="char">L</span>
+      <span class="char">Δ</span>
+      <span class="char red">B</span>
+      <span class="char">S</span>
+    </div>
   </div>
-  <h1>Need a pentest? Or just wanna see if you’re hackable?</h1>
-  <p>We specialize in offensive security engagements. Whether you're a startup or an established organization, we can help you find weaknesses before attackers do.</p>
-  <p>Our services include:</p>
-  <ul>
-    <li>Web application penetration testing</li>
-    <li>Internal network assessments and red team operations</li>
-    <li>Cloud and Active Directory security reviews</li>
-    <li>Social engineering simulations and phishing campaigns</li>
-    <li>Physical (on the premesis!) penetration tests</li>
-  </ul>
-  <p>All assessments are conducted with a deep understanding of adversarial tactics, custom tooling, and post-exploitation scenarios.</p>
-  <p>To get in touch, email <a href="mailto:daniel.gray@obfuslabs.com">daniel.gray@obfuslabs.com</a>.</p>
-</body>
+
+  <section class="panel">
+    <h1>Need a pentest? Or just wanna see if you’re hackable?</h1>
+    <p>We specialize in offensive security engagements. Whether you're a startup or an established organization, we can help you find weaknesses before attackers do.</p>
+    <p>Our services include:</p>
+    <ul>
+      <li>Web application penetration testing</li>
+      <li>Internal network assessments and red team operations</li>
+      <li>Cloud and Active Directory security reviews</li>
+      <li>Social engineering simulations and phishing campaigns</li>
+      <li>Physical (on the premises!) penetration tests</li>
+    </ul>
+    <p>All assessments are conducted with a deep understanding of adversarial tactics, custom tooling, and post-exploitation scenarios.</p>
+    <p>To get in touch, email <a href="mailto:daniel.gray@obfuslabs.com">daniel.gray@obfuslabs.com</a>.</p>
+  </section>
+
 <script>
-    const glitch = document.getElementById('glitch-letter');
-    const states = ['█', 'ʞ', 'U'];
-    let i = 0;
+  const glitch = document.getElementById('glitch-letter');
+  const states = ['█', 'ʞ', 'U'];
+  let i = 0;
 
-    setInterval(() => {
-      glitch.textContent = states[i % states.length];
-      i++;
-    }, 700);
-  </script>
+  setInterval(() => {
+    glitch.textContent = states[i % states.length];
+    i++;
+  }, 700);
+</script>
 
+</body>
 </html>
+
