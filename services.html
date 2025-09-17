@@ -18,42 +18,13 @@
       text-decoration: underline;
     }
 
-    /* logo + pattern wrapper (keeps the logo look you liked) */
-    .logo-wrapper {
-      position: relative;
-      display: inline-block; /* shrink-wrap to the logo width */
-      margin-bottom: 1rem;
-    }
-
-    .logo-wrapper::before {
-      content: "";
-      position: absolute;
-      left: -18px;
-      top: -12px;
-      right: -18px;
-      bottom: -12px;
-      z-index: -1;
-      pointer-events: none;
-
-      /* faint base panel behind the logo */
-      background-color: rgba(255,255,255,0.02);
-
-      /* subtle tiled rectangles */
-      background-image:
-        linear-gradient(90deg, rgba(255,255,255,0.02) 0 6px, transparent 6px),
-        linear-gradient(180deg, rgba(255,255,255,0.02) 0 6px, transparent 6px);
-      background-size: 36px 36px, 36px 36px;
-
-      border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.03);
-    }
-
-    /* bigger logo per your ask */
+    /* logo (plain on black now) */
     .logo {
-      font-size: 3.2rem; /* increased size */
+      font-size: 2.5rem; /* restored original size */
       letter-spacing: 0.6rem;
       display: flex;
       align-items: center;
+      margin-bottom: 1rem;
     }
 
     .char {
@@ -88,37 +59,34 @@
       pointer-events: none;
       border-radius: 4px;
 
-      /* same faint tiled rectangles used for logo but larger grid for subtle variety */
+      /* faint tiled rectangles */
       background-image:
         linear-gradient(90deg, rgba(255,255,255,0.02) 0 8px, transparent 8px),
         linear-gradient(180deg, rgba(255,255,255,0.02) 0 8px, transparent 8px);
       background-size: 48px 48px, 48px 48px;
 
-      /* slightly different base tint so the panel still reads as a single unit */
+      /* subtle base tint */
       background-color: rgba(255,255,255,0.01);
     }
 
     /* small responsive tweak */
     @media (max-width: 540px) {
-      .logo { font-size: 2.4rem; letter-spacing: 0.35rem; }
+      .logo { font-size: 2.1rem; letter-spacing: 0.35rem; }
       .panel { padding: 1rem; }
     }
   </style>
 </head>
 <body>
-  <!-- logo wrapped so pattern sits only behind logo -->
-  <div class="logo-wrapper">
-    <div class="logo" aria-hidden="true">
-      <span class="char">O</span>
-      <span class="char red">B</span>
-      <span class="char">F</span>
-      <span class="char" id="glitch-letter">Ʞ</span>
-      <span class="char">S</span>
-      <span class="char">L</span>
-      <span class="char">Δ</span>
-      <span class="char red">B</span>
-      <span class="char">S</span>
-    </div>
+  <div class="logo" aria-hidden="true">
+    <span class="char">O</span>
+    <span class="char red">B</span>
+    <span class="char">F</span>
+    <span class="char" id="glitch-letter">Ʞ</span>
+    <span class="char">S</span>
+    <span class="char">L</span>
+    <span class="char">Δ</span>
+    <span class="char red">B</span>
+    <span class="char">S</span>
   </div>
 
   <section class="panel">
