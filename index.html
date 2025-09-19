@@ -171,7 +171,13 @@
     }
     /* label flicker every ~4s */
   @keyframes labelFlicker {
-    0%, 75%, 100% { opacity: 0; }
+    /* Wider visible window for a touch longer on screen */
+    0%, 70%, 100% { opacity: 0; }
+    74% { opacity: 1; }
+    80% { opacity: 0.3; }
+    86% { opacity: 1; }
+    94% { opacity: 0.5; }
+  }
     80% { opacity: 1; }
     85% { opacity: 0.3; }
     90% { opacity: 1; }
@@ -183,6 +189,28 @@
     .arrow { width: 64px; height: 64px; border-left: 4px solid #00FF00; border-bottom: 4px solid #00FF00; }
     .scroll-cue .label { font-size: 1rem; }
   }
+  /* Landing pad (appears when user attempts to scroll from bottom quarter) */
+  #landingPad {
+    position: fixed; left: 0; right: 0; bottom: 0; height: 18vh;
+    background: rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.4) inset;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .25s ease, transform .25s ease;
+    pointer-events: none; z-index: 10000; /* under arrow (10001) */
+  }
+  #landingPad::before, #landingPad::after {
+    content: ""; position: absolute; bottom: 10px; width: 8px; height: 28px;
+    background: rgba(255,255,255,0.15); border-radius: 2px;
+  }
+  #landingPad::before { left: 12px; }
+  #landingPad::after  { right: 12px; }
+  #landingPad.show { opacity: 1; transform: translateY(0); }
+
+  /* Page transition overlay (soft fade before navigating) */
+  #pageWipe { position: fixed; inset: 0; background: #0a0a0a; opacity: 0; pointer-events: none; transition: opacity .45s ease; z-index: 10002; }
+  #pageWipe.active { opacity: 1; }
+
 </style>
 
   <script>
@@ -206,63 +234,6 @@
         document.getElementById('overlay-text').style.fontSize = '40px';
       });
     }
-     // ---- Scroll/Swipe/Key => navigate to Services ----
-  (function () {
-    const servicesCue = document.getElementById('servicesCue');
-    const servicesUrl = servicesCue ? (servicesCue.getAttribute('href') || '/services') : '/services';
-
-    let armed = false;     // only true after intro finishes
-    let navigated = false; // prevent double fire
-
-    function goToServices() {
-      if (navigated || !armed) return;
-      navigated = true;
-      window.location.href = servicesUrl;
-    }
-
-    // Arm after the intro finishes (hooks your existing setTimeout)
-    const _oldReveal = () => { armed = true; };
-    // If you want to be explicit, call this right after you show the arrow:
-    // document.getElementById('servicesCue').style.display = 'inline-flex'; armed = true;
-    setTimeout(_oldReveal, 2100); // a hair after your 2000ms intro
-
-    // Wheel / trackpad scroll (accumulate within a short window)
-    let wheelAccum = 0;
-    let wheelTimer = null;
-    window.addEventListener('wheel', (e) => {
-      if (!armed || navigated) return;
-      if (e.ctrlKey || e.metaKey) return; // don't hijack zoom
-      wheelAccum += e.deltaY;             // positive = scrolling down (natural scrolling OK)
-      clearTimeout(wheelTimer);
-      wheelTimer = setTimeout(() => { wheelAccum = 0; }, 400);
-      if (wheelAccum > 200) goToServices(); // tweak threshold to taste
-    }, { passive: true });
-
-    // Touch swipe (swipe up = scroll down)
-    let touchStartY = null;
-    window.addEventListener('touchstart', (e) => {
-      touchStartY = e.changedTouches[0].clientY;
-    }, { passive: true });
-
-    window.addEventListener('touchend', (e) => {
-      if (!armed || navigated || touchStartY === null) return;
-      const dy = touchStartY - e.changedTouches[0].clientY; // swipe up => positive
-      if (dy > 60) goToServices(); // mobile threshold
-      touchStartY = null;
-    }, { passive: true });
-
-    // Keyboard (Down / PageDown / Space)
-    window.addEventListener('keydown', (e) => {
-      if (!armed || navigated) return;
-      const el = document.activeElement;
-      const inInput = el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA');
-      if (inInput) return;
-      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-        goToServices();
-      }
-    });
-  })();
-    
   </script>
 </head>
 <body>
@@ -355,8 +326,98 @@
     <div class="label">Services</div>
     <div class="arrow"></div>
   </a>
+  
+  <!-- Landing pad + page transition overlay -->
+  <div id="landingPad" aria-hidden="true"></div>
+  <div id="pageWipe" aria-hidden="true"></div>
+
+  <script>
+    // Bottom-quarter scroll navigation with landing pad + gentle transition
+    (function () {
+      const cue = document.getElementById('servicesCue');
+      const servicesUrl = cue ? (cue.getAttribute('href') || '/services') : '/services';
+      const landingPad = document.getElementById('landingPad');
+      const pageWipe = document.getElementById('pageWipe');
+
+      let armed = false;      // becomes true shortly after intro reveal
+      let navigated = false;  // prevent double fire
+      let padTimer = null;    // hide landing pad timeout
+
+      // Arm just after the intro (slightly after existing 2000ms)
+      setTimeout(() => { armed = true; }, 2100);
+
+      function showPad() {
+        if (!landingPad) return;
+        landingPad.classList.add('show');
+        clearTimeout(padTimer);
+        padTimer = setTimeout(() => landingPad.classList.remove('show'), 1200);
+      }
+
+      function goToServices() {
+        if (navigated || !armed) return;
+        navigated = true;
+        if (pageWipe) {
+          pageWipe.classList.add('active');
+          setTimeout(() => { window.location.href = servicesUrl; }, 460);
+        } else {
+          window.location.href = servicesUrl;
+        }
+      }
+
+      function inBottomQuarter(y) {
+        return y >= (window.innerHeight * 0.75);
+      }
+
+      // Wheel / trackpad: only count downward scrolls that START in bottom quarter
+      let wheelAccum = 0;
+      let wheelTimer = null;
+      window.addEventListener('wheel', (e) => {
+        if (!armed || navigated) return;
+        // Ignore zoom gestures
+        if (e.ctrlKey || e.metaKey) return;
+        // Only react when cursor is in bottom quarter
+        if (!inBottomQuarter(e.clientY || 0)) return;
+        if (e.deltaY <= 0) return; // only downward intention
+
+        showPad();
+        wheelAccum += e.deltaY;
+        clearTimeout(wheelTimer);
+        wheelTimer = setTimeout(() => { wheelAccum = 0; }, 500);
+        // Higher threshold to avoid accidental nav
+        if (wheelAccum > 1000) goToServices();
+      }, { passive: true });
+
+      // Touch swipe: must begin in bottom quarter and be a clear upward swipe (scroll down)
+      let touchStartY = null;
+      window.addEventListener('touchstart', (e) => {
+        const y = e.changedTouches[0].clientY;
+        if (inBottomQuarter(y)) {
+          touchStartY = y;
+        } else {
+          touchStartY = null;
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!armed || navigated || touchStartY == null) return;
+        const dy = touchStartY - e.changedTouches[0].clientY; // swipe up => positive
+        if (dy > 10) showPad();
+      }, { passive: true });
+
+      window.addEventListener('touchend', (e) => {
+        if (!armed || navigated || touchStartY == null) return;
+        const dy = touchStartY - e.changedTouches[0].clientY;
+        if (dy > 140) goToServices();
+        touchStartY = null;
+      }, { passive: true });
+
+      // Optional: keyboard navigation disabled to avoid accidental jumps; arrow remains clickable.
+    })();
+  </script>
+
 </body>
 </html>
+
 
   </a>
 </body>
