@@ -206,6 +206,63 @@
         document.getElementById('overlay-text').style.fontSize = '40px';
       });
     }
+     // ---- Scroll/Swipe/Key => navigate to Services ----
+  (function () {
+    const servicesCue = document.getElementById('servicesCue');
+    const servicesUrl = servicesCue ? (servicesCue.getAttribute('href') || '/services') : '/services';
+
+    let armed = false;     // only true after intro finishes
+    let navigated = false; // prevent double fire
+
+    function goToServices() {
+      if (navigated || !armed) return;
+      navigated = true;
+      window.location.href = servicesUrl;
+    }
+
+    // Arm after the intro finishes (hooks your existing setTimeout)
+    const _oldReveal = () => { armed = true; };
+    // If you want to be explicit, call this right after you show the arrow:
+    // document.getElementById('servicesCue').style.display = 'inline-flex'; armed = true;
+    setTimeout(_oldReveal, 2100); // a hair after your 2000ms intro
+
+    // Wheel / trackpad scroll (accumulate within a short window)
+    let wheelAccum = 0;
+    let wheelTimer = null;
+    window.addEventListener('wheel', (e) => {
+      if (!armed || navigated) return;
+      if (e.ctrlKey || e.metaKey) return; // don't hijack zoom
+      wheelAccum += e.deltaY;             // positive = scrolling down (natural scrolling OK)
+      clearTimeout(wheelTimer);
+      wheelTimer = setTimeout(() => { wheelAccum = 0; }, 400);
+      if (wheelAccum > 200) goToServices(); // tweak threshold to taste
+    }, { passive: true });
+
+    // Touch swipe (swipe up = scroll down)
+    let touchStartY = null;
+    window.addEventListener('touchstart', (e) => {
+      touchStartY = e.changedTouches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+      if (!armed || navigated || touchStartY === null) return;
+      const dy = touchStartY - e.changedTouches[0].clientY; // swipe up => positive
+      if (dy > 60) goToServices(); // mobile threshold
+      touchStartY = null;
+    }, { passive: true });
+
+    // Keyboard (Down / PageDown / Space)
+    window.addEventListener('keydown', (e) => {
+      if (!armed || navigated) return;
+      const el = document.activeElement;
+      const inInput = el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA');
+      if (inInput) return;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+        goToServices();
+      }
+    });
+  })();
+    
   </script>
 </head>
 <body>
