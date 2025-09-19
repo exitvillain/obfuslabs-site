@@ -1,102 +1,250 @@
-<!-- services.html (revamped) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Services – ObfusLabs</title>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
+  <title>ObfusLabs</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <style>
-    :root {
-      --bg: #0a0a0a;
-      --fg: #f0f0f0;
-      --muted: #c7c7c7;
-      --panel: rgba(255,255,255,0.02);
-      --panel-border: rgba(255,255,255,0.03);
-      --accent: #00ff00; /* terminal green */
-      --accent2: #FF2B63; /* pink-red used in logo */
-    }
-
-    /* Base */
-    html, body { height: 100%; }
     body {
-      margin: 0; padding: 3rem; box-sizing: border-box;
-      background: var(--bg); color: var(--fg);
-      font-family: "Courier New", Courier, monospace; line-height: 1.6;
-    }
-    a { color: var(--accent); text-decoration: underline; }
-
-    /* Logo */
-    .logo { font-size: 2.5rem; letter-spacing: .6rem; display: flex; align-items: center; margin-bottom: 1rem; }
-    .char { display: inline-block; transition: color .3s; }
-    .char.red { color: var(--accent2); }
-
-    /* Panels */
-    .panel {
-      position: relative; background: var(--panel); border: 1px solid var(--panel-border);
-      padding: 1.25rem; margin-top: 1.25rem; border-radius: 6px; overflow: visible;
-    }
-    .panel::before {
-      content: ""; position: absolute; left: 8px; top: 8px; right: 8px; bottom: 8px; z-index: -1; pointer-events: none; border-radius: 6px;
-      background-image:
-        linear-gradient(90deg, rgba(255,255,255,0.02) 0 8px, transparent 8px),
-        linear-gradient(180deg, rgba(255,255,255,0.02) 0 8px, transparent 8px);
-      background-size: 48px 48px, 48px 48px; background-color: rgba(255,255,255,0.01);
+      overflow: hidden;
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
     }
 
-    /* Headings */
-    h1, h2, h3 { margin: .2rem 0 .6rem; }
-    h1 { font-size: 1.4rem; }
-    h2 { font-size: 1.2rem; color: var(--muted); }
+    #matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background: #0a0a0a;
+    }
 
-    /* Services layout */
-    .stack { display: grid; gap: 1.25rem; }
+    #overlay-text {
+      position: fixed;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #FF2B63;
+      font-size: 1.2rem;
+      font-family: 'Fira Mono', monospace;
+      z-index: 10000;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+    }
 
-    /* Arrow cue */
+    @keyframes flicker {
+      0% { opacity: 0.85; }
+      50% { opacity: 0.3; }
+      100% { opacity: 0.85; }
+    }
+
+    .logo, .tagline, .nav {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 1;
+    }
+
+    .logo {
+      font-size: 3.0rem;
+      letter-spacing: 0.6rem;
+      display: flex;
+    }
+
+    .char {
+      display: inline-block;
+      transition: color 0.3s;
+    }
+
+    .char.red {
+      color: #FF2B63;
+    }
+
+    .tagline {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 1rem;
+      color: #999;
+    }
+
+    .subtext {
+      margin-top: 0.5rem;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #777;
+    }
+
+    .nav {
+      margin-top: 2rem;
+      font-size: 1rem;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .nav a {
+      color: #777;
+      text-decoration: none;
+      margin: 0 1rem;
+    }
+
+    .nav a:hover {
+      text-decoration: underline;
+    }
+
+    .nav2 {
+      margin-top: 2rem;
+      font-size: 1rem;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .nav2 a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1rem;
+    }
+
+    .nav2 a:hover {
+      text-decoration: underline;
+    }
+
+    #glitch-letter {
+      display: inline-block;
+      height: 1em;
+      line-height: 1em;
+      vertical-align: baseline;
+      position: relative;
+      top: 0.05em;
+      transition: all 0.2s ease-in-out;
+    }
+
+    /* --- Services arrow cue (bottom-center) --- */
     .scroll-cue {
-      position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
-      cursor: pointer; user-select: none; display: inline-flex; flex-direction: column; align-items: center;
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      cursor: pointer;
+      user-select: none;
+      display: none; /* hidden until intro completes */
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none; /* if it's an <a> */
       filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.25));
+      z-index: 10001; /* above canvas (9999) and overlay (10000) */
     }
-    .scroll-cue .label { font-size: .85rem; color: var(--muted); margin-bottom: .25rem; letter-spacing: .04rem; }
+    .scroll-cue .label {
+      font-size: 0.85rem;
+      color: #c7c7c7;
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.04rem;
+      font-family: 'Courier New', Courier, monospace;
+      opacity: 0;                 /* hidden by default; flickers in */
+      animation: labelFlicker 4s infinite;
+    }
     .arrow {
-      width: 24px; height: 24px; border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent);
+      width: 48px;                 /* bigger (roughly 2x) */
+      height: 48px;
+      border-left: 3px solid #00FF00;
+      border-bottom: 3px solid #00FF00;
       transform: rotate(-45deg);
       animation: bob 1.2s ease-in-out infinite, pulse 1.8s ease-in-out infinite;
     }
-    @keyframes bob { 0%,100%{ transform: translateY(0) rotate(-45deg);} 50%{ transform: translateY(6px) rotate(-45deg);} }
-    @keyframes pulse { 0%,100%{ opacity: .5;} 50%{ opacity: 1; } }
-
-    /* View switcher (tabs) */
-    .tabs { display: flex; gap: 8px; margin: .5rem 0 0; flex-wrap: wrap; }
-    .tab {
-      padding: .35rem .6rem; border: 1px dashed var(--panel-border); color: var(--muted);
-      cursor: pointer; border-radius: 4px; transition: background .2s, color .2s, border-color .2s;
+    @keyframes bob {
+      0%, 100% { transform: translateY(0) rotate(-45deg); }
+      50%      { transform: translateY(6px) rotate(-45deg); }
     }
-    .tab.active { color: var(--fg); border-color: var(--accent); box-shadow: 0 0 0 1px rgba(0,255,0,0.08) inset; }
-    .hidden { display: none; }
-
-    /* Lists */
-    ul { margin: .5rem 0 0 1.2rem; }
-
-    /* Footer / contact */
-    .cta { margin-top: .75rem; }
-
-    /* Responsive */
-    @media (max-width: 540px) {
-      body { padding: 1.5rem; }
-      .logo { font-size: 2.1rem; letter-spacing: .35rem; }
-      .panel { padding: 1rem; }
-      .scroll-cue { bottom: 12px; }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50%      { opacity: 1; }
     }
-  </style>
+    /* label flicker every ~4s */
+  @keyframes labelFlicker {
+    /* Wider visible window for a touch longer on screen */
+    0%, 70%, 100% { opacity: 0; }
+    74% { opacity: 1; }
+    80% { opacity: 0.3; }
+    86% { opacity: 1; }
+    94% { opacity: 0.5; }
+  }
+    80% { opacity: 1; }
+    85% { opacity: 0.3; }
+    90% { opacity: 1; }
+    95% { opacity: 0.5; }
+  }
+
+  /* Mobile: make arrow larger on index (without touching services page) */
+  @media (max-width: 540px) {
+    .arrow { width: 64px; height: 64px; border-left: 4px solid #00FF00; border-bottom: 4px solid #00FF00; }
+    .scroll-cue .label { font-size: 1rem; }
+  }
+  /* Landing pad (appears when user attempts to scroll from bottom quarter) */
+  #landingPad {
+    position: fixed; left: 0; right: 0; bottom: 0; height: 18vh;
+    background: rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.4) inset;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .25s ease, transform .25s ease;
+    pointer-events: none; z-index: 10000; /* under arrow (10001) */
+  }
+  #landingPad::before, #landingPad::after {
+    content: ""; position: absolute; bottom: 10px; width: 8px; height: 28px;
+    background: rgba(255,255,255,0.15); border-radius: 2px;
+  }
+  #landingPad::before { left: 12px; }
+  #landingPad::after  { right: 12px; }
+  #landingPad.show { opacity: 1; transform: translateY(0); }
+
+  /* Page transition overlay (soft fade before navigating) */
+  #pageWipe { position: fixed; inset: 0; background: #0a0a0a; opacity: 0; pointer-events: none; transition: opacity .45s ease; z-index: 10002; }
+  #pageWipe.active { opacity: 1; }
+
+</style>
+
+  <script>
+    // JavaScript-based fallback for device detection
+    function isMobileDevice() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const isPortrait = height > width;
+      const isPhoneUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      return isPhoneUA && isPortrait;
+    }
+    const isMobile = isMobileDevice();
+    if (isMobile) {
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector('.logo').style.fontSize = '100px';
+        document.querySelector('.tagline').style.fontSize = '30px';
+        document.querySelector('.nav2').style.fontSize = '30px';
+        document.querySelectorAll('.subtext, .nav').forEach(el => {
+          el.style.fontSize = '30px';
+        });
+        document.getElementById('overlay-text').style.fontSize = '40px';
+      });
+    }
+  </script>
 </head>
 <body>
-  <!-- Logo -->
-  <div class="logo" aria-hidden="true">
+  <canvas id="matrix"></canvas>
+  <div id="overlay-text">ACCESSING: obfuslabs.com...</div>
+
+  <div class="logo">
     <span class="char">O</span>
     <span class="char red">B</span>
     <span class="char">F</span>
-    <span class="char" id="glitch-letter">Ʞ</span>
+    <span class="char" id="glitch-letter">ʞ</span>
     <span class="char">S</span>
     <span class="char">L</span>
     <span class="char">Δ</span>
@@ -104,140 +252,170 @@
     <span class="char">S</span>
   </div>
 
-  <!-- View switcher -->
-  <div class="panel" id="previewBanner" style="display:block;margin-top:.5rem;">
-    <strong>ObfuScope</strong>
-    <span style="font-size:.8rem;color:#c7c7c7;"> — Private Preview</span>
-    <p style="margin:.3rem 0 0;color:#c7c7c7;">We’re rolling this out with select clients. Want early access? <a href="mailto:daniel.gray@obfuslabs.com?subject=ObfuScope%20Private%20Preview">Join the waitlist</a>.</p>
+  <br><br>
+  <div class="tagline">Obfuscation. Evasion. Offensive Security. — NYC</div>
+
+  <div class="nav">
+    <p><a href="/services">Need a pentest? Or just want to see if you’re hackable?</a></p>
+    <br><br>
+    <p> Members:</p>
+    <p><a href="/exit">exitvillain</a></p>
+    <p><a href="/denomin8r">denomin8r</a></p>
   </div>
-  <div class="tabs" role="tablist">
-    <div class="tab active" role="tab" aria-selected="true" tabindex="0" data-target="#assessments">Assessments</div>
-    <div class="tab" role="tab" aria-selected="false" tabindex="0" data-target="#soc">SOC‑as‑a‑Service</div>
-  </div>
-
-  <!-- Assessments / Core Services -->
-  <section id="assessments" class="panel stack" role="tabpanel" aria-labelledby="Assessments">
-    <h1>Need a pentest? Wanna know if you’re hackable?</h1>
-    <p>We’re ObfusLabs — a boutique offensive security lab and SOC‑for‑hire. We combine creative red‑team tradecraft with production‑ready detection and response so you not only find the weaknesses — you keep them fixed.</p>
-
-    <h2>Core engagements</h2>
-    <ul>
-      <li><strong>Web Application Penetration Testing</strong> — modern web stacks, APIs, auth logic, chained exploitation and exploitability proof‑of‑concept.</li>
-      <li><strong>Internal Network Assessments & Red Team Operations</strong> — discovery, exploitation, lateral movement, domain compromise, and business‑impact scenarios.</li>
-      <li><strong>Cloud Security Reviews</strong> — AWS / Azure / GCP posture, privilege review, CI/CD checks, cloud‑native misconfigurations, attack‑path analysis.</li>
-      <li><strong>Active Directory & Identity Security</strong> — AD estate enumeration, Kerberos abuse, privilege chains, detection guidance for identity‑based attacks.</li>
-      <li><strong>Social Engineering & Phishing Campaigns</strong> — realistic phish simulations, risk scoring, and tailored training follow‑ups.</li>
-      <li><strong>Physical Penetration Testing</strong> — on‑premises physical security assessments (access control, badge/lock bypass, red‑team site ops).</li>
-      <li><strong>PURPLE Team & Detection Tuning</strong> — we emulate adversaries and then tune your detections so attacks become visible.</li>
-      <li><strong>Breach & Attack Simulation / Continuous Validation</strong> — automated + manual simulation to validate controls on cadence.</li>
-      <li><strong>Incident Response Retainer & Forensics</strong> — rapid containment, triage, root cause, and remediation playbooks.</li>
-      <li><strong>Training & Workshops</strong> — SOC analyst training, threat‑hunting bootcamps, secure‑coding, executive tabletops.</li>
-    </ul>
-
-    <h2>Why ObfusLabs?</h2>
-    <ul>
-      <li><strong>Boutique attention</strong>: custom dashboards and client‑specific risk views (no cookie‑cutter portals).</li>
-      <li><strong>Offensive‑first detection</strong>: we build findings so your SOC can actually detect them.</li>
-      <li><strong>Actionable remediation</strong>: playbooks, patches, and testable verification steps — not vague advice.</li>
-      <li><strong>Clear collaboration</strong>: live client portal (ObfuScope — private preview), Jira/ServiceNow sync, branded remediation reporting.</li>
-    </ul>
-
-    <p class="cta">Email us: <a href="mailto:daniel.gray@obfuslabs.com">daniel.gray@obfuslabs.com</a></p>
-  </section>
-
-  <!-- SOC-as-a-Service -->
-  <section id="soc" class="panel stack hidden" role="tabpanel" aria-labelledby="SOC">
-    <h1>New offering: SOC‑as‑a‑Service (Managed SOC / SOC‑for‑hire)</h1>
-    <p>For organizations that don’t want to run a full SOC in‑house — or that need a boutique partner who actually understands attacker tradecraft.</p>
-
-    <h2>What you get</h2>
-    <ul>
-      <li><strong>Deployment & Onboarding</strong> — integrate with your EDR (CrowdStrike/Defender), SIEM (Sentinel/Splunk), cloud telemetry, identity logs; read‑only roles with least privilege; baseline tuning.</li>
-      <li><strong>24/7 Monitoring & Detection</strong> (or business‑hours) — alert monitoring, triage, investigation, real‑time escalation; playbook‑driven containment (host isolate, kill process, revoke token).</li>
-      <li><strong>Threat Hunting & Threat Intel</strong> — scheduled hunts mapped to MITRE ATT&CK; curated intel translated into detections.</li>
-      <li><strong>Detection Engineering & Tuning</strong> — vendor‑agnostic rules; false‑positive reduction; automated enrichment (process trees, pivots, cloud metadata).</li>
-      <li><strong>Incident Response Retainer</strong> — priority IR with RTO/RPO SLAs; evidence preservation; remediation tasks.
-      </li>
-      <li><strong>Reporting & Governance</strong> — weekly analyst notes; monthly executive reports (MTTR, top detections, trending risk); continuous remediation tracking in the portal.</li>
-    </ul>
-
-    <h2>Optional add‑ons</h2>
-    <ul>
-      <li>PURPLE Team exercises & detection hardening</li>
-      <li>Cloud‑native runtime detection for containers/K8s</li>
-      <li>PCI/HIPAA/ISO mapping & advisory</li>
-      <li>Custom client dashboard and branded reporting (ObfuScope customization)</li>
-    </ul>
-
-    <h2>Onboarding & SLAs</h2>
-    <ul>
-      <li><strong>Timeline</strong>: 2–6 weeks (source and scope dependent)</li>
-      <li><strong>24/7</strong>: Critical acknowledgement ≤ 15 min; initial triage ≤ 1 hr</li>
-      <li><strong>Business‑hours</strong>: Critical acknowledgement ≤ 2 hrs</li>
-    </ul>
-
-    <h2>Deliverables</h2>
-    <ul>
-      <li>Live ObfuScope tenant (private preview) with role‑based views</li>
-      <li>Monthly Executive Risk Brief & Quarterly Tabletop</li>
-      <li>Incident playbooks + one custom detection tune/month (extras available)</li>
-    </ul>
-
-    <h2>Pricing models</h2>
-    <ul>
-      <li><strong>Retainer + consumption</strong> — base monthly fee + per‑incident/per‑hour IR</li>
-      <li><strong>Tiered seats</strong> — Bronze (Biz hours), Silver (24/7 monitoring), Gold (24/7 + advanced hunting)</li>
-      <li><strong>Project → Managed</strong> — 3‑month pentest + detection hardening pilot → convert to monthly SOC retainer</li>
-    </ul>
-
-    <p class="cta">Start the conversation: <a href="mailto:daniel.gray@obfuslabs.com?subject=SOC-as-a-Service%20with%20ObfuScope%20Preview">daniel.gray@obfuslabs.com</a></p>
-  </section>
-
-  <!-- Down-arrow cue to reveal SOC section on first view -->
-  <div class="scroll-cue" id="scrollCue" aria-hidden="false" title="View SOC‑as‑a‑Service">
-    <div class="label">SOC‑as‑a‑Service</div>
-    <div class="arrow"></div>
+  <div class="nav2">
+     <p><a href="/current-research">Current Research</a></p>
   </div>
 
   <script>
-    // Logo glitch cycle
     const glitch = document.getElementById('glitch-letter');
     const states = ['█', 'ʞ', 'U'];
-    let gi = 0;
-    setInterval(() => { glitch.textContent = states[gi % states.length]; gi++; }, 700);
+    let i = 0;
+    setInterval(() => {
+      glitch.textContent = states[i % states.length];
+      i++;
+    }, 700);
 
-    // Tabs toggle between Assessments and SOC sections
-    const tabs = document.querySelectorAll('.tab');
-    const sections = { assessments: document.querySelector('#assessments'), soc: document.querySelector('#soc') };
-    function setActive(targetSel) {
-      const isAssess = targetSel === '#assessments';
-      sections.assessments.classList.toggle('hidden', !isAssess);
-      sections.soc.classList.toggle('hidden', isAssess);
-      tabs.forEach(t => t.classList.toggle('active', t.dataset.target === targetSel));
-      // Hide the scroll cue if we are already in SOC
-      document.getElementById('scrollCue').style.display = isAssess ? 'inline-flex' : 'none';
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const letters = '01+×=■%▚░▓█▌☰!@#$%^&*abcdef'.split('');
+    const fontSize = isMobile ? 64 : 32; // wider columns on mobile
+    const columns = Math.floor(canvas.width / fontSize);
+    const columnWidths = Array.from({ length: columns }, () => {
+      const r = Math.random();
+      return fontSize * (r < 0.02 ? 4 : r < 0.07 ? 2 : 1);
+    });
+    const drops = Array.from({ length: columns }, () => 1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(10,10,10,0.15)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.font = `${fontSize}px Fira Mono`;
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        const isRed = Math.random() < 0.02;
+        ctx.fillStyle = isRed ? '#FF2B63' : (Math.random() < 0.2 ? '#777' : '#f0f0f0');
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
     }
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => setActive(tab.dataset.target));
-      tab.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActive(tab.dataset.target); } });
-    });
 
-    // Scroll cue brings user to SOC view and toggles tab
-    const cue = document.getElementById('scrollCue');
-    cue.addEventListener('click', () => {
-      setActive('#soc');
-      sections.soc.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    const interval = setInterval(draw, 40);
 
-    // If user scrolls near bottom of assessments, hint arrow less (reduce pulse)
-    let lastY = 0;
-    document.addEventListener('scroll', () => {
-      const y = window.scrollY || document.documentElement.scrollTop;
-      const nearEnd = (window.innerHeight + y) > (sections.assessments.offsetTop + sections.assessments.offsetHeight - 120);
-      cue.style.opacity = nearEnd ? 0.75 : 1;
-      lastY = y;
-    });
+    setTimeout(() => {
+      clearInterval(interval);
+      canvas.style.display = 'none';
+      document.getElementById('overlay-text').style.opacity = 0;
+      document.querySelector('.logo').style.opacity = 1;
+      document.querySelector('.tagline').style.opacity = 1;
+      document.querySelector('.nav').style.opacity = 1;
+      // reveal services arrow after intro
+      document.getElementById('servicesCue').style.display = 'inline-flex';
+    }, 2000);
   </script>
+
+  <!-- Bottom-center Services arrow (same as Services page style) -->
+  <a href="/services" class="scroll-cue" id="servicesCue" aria-label="Go to Services">
+    <div class="label">Services</div>
+    <div class="arrow"></div>
+  </a>
+  
+  <!-- Landing pad + page transition overlay -->
+  <div id="landingPad" aria-hidden="true"></div>
+  <div id="pageWipe" aria-hidden="true"></div>
+
+  <script>
+    // Bottom-quarter scroll navigation with landing pad + gentle transition
+    (function () {
+      const cue = document.getElementById('servicesCue');
+      const servicesUrl = cue ? (cue.getAttribute('href') || '/services') : '/services';
+      const landingPad = document.getElementById('landingPad');
+      const pageWipe = document.getElementById('pageWipe');
+
+      let armed = false;      // becomes true shortly after intro reveal
+      let navigated = false;  // prevent double fire
+      let padTimer = null;    // hide landing pad timeout
+
+      // Arm just after the intro (slightly after existing 2000ms)
+      setTimeout(() => { armed = true; }, 2100);
+
+      function showPad() {
+        if (!landingPad) return;
+        landingPad.classList.add('show');
+        clearTimeout(padTimer);
+        padTimer = setTimeout(() => landingPad.classList.remove('show'), 1200);
+      }
+
+      function goToServices() {
+        if (navigated || !armed) return;
+        navigated = true;
+        if (pageWipe) {
+          pageWipe.classList.add('active');
+          setTimeout(() => { window.location.href = servicesUrl; }, 460);
+        } else {
+          window.location.href = servicesUrl;
+        }
+      }
+
+      function inBottomQuarter(y) {
+        return y >= (window.innerHeight * 0.75);
+      }
+
+      // Wheel / trackpad: only count downward scrolls that START in bottom quarter
+      let wheelAccum = 0;
+      let wheelTimer = null;
+      window.addEventListener('wheel', (e) => {
+        if (!armed || navigated) return;
+        // Ignore zoom gestures
+        if (e.ctrlKey || e.metaKey) return;
+        // Only react when cursor is in bottom quarter
+        if (!inBottomQuarter(e.clientY || 0)) return;
+        if (e.deltaY <= 0) return; // only downward intention
+
+        showPad();
+        wheelAccum += e.deltaY;
+        clearTimeout(wheelTimer);
+        wheelTimer = setTimeout(() => { wheelAccum = 0; }, 500);
+        // Higher threshold to avoid accidental nav
+        if (wheelAccum > 1000) goToServices();
+      }, { passive: true });
+
+      // Touch swipe: must begin in bottom quarter and be a clear upward swipe (scroll down)
+      let touchStartY = null;
+      window.addEventListener('touchstart', (e) => {
+        const y = e.changedTouches[0].clientY;
+        if (inBottomQuarter(y)) {
+          touchStartY = y;
+        } else {
+          touchStartY = null;
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!armed || navigated || touchStartY == null) return;
+        const dy = touchStartY - e.changedTouches[0].clientY; // swipe up => positive
+        if (dy > 10) showPad();
+      }, { passive: true });
+
+      window.addEventListener('touchend', (e) => {
+        if (!armed || navigated || touchStartY == null) return;
+        const dy = touchStartY - e.changedTouches[0].clientY;
+        if (dy > 140) goToServices();
+        touchStartY = null;
+      }, { passive: true });
+
+      // Optional: keyboard navigation disabled to avoid accidental jumps; arrow remains clickable.
+    })();
+  </script>
+
 </body>
 </html>
+
 
