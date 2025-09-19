@@ -150,12 +150,14 @@
       margin-bottom: 0.25rem;
       letter-spacing: 0.04rem;
       font-family: 'Courier New', Courier, monospace;
+      opacity: 0;                 /* hidden by default; flickers in */
+      animation: labelFlicker 4s infinite;
     }
     .arrow {
-      width: 24px;
-      height: 24px;
-      border-left: 2px solid #00FF00;
-      border-bottom: 2px solid #00FF00;
+      width: 48px;                 /* bigger (roughly 2x) */
+      height: 48px;
+      border-left: 3px solid #00FF00;
+      border-bottom: 3px solid #00FF00;
       transform: rotate(-45deg);
       animation: bob 1.2s ease-in-out infinite, pulse 1.8s ease-in-out infinite;
     }
@@ -167,7 +169,21 @@
       0%, 100% { opacity: 0.5; }
       50%      { opacity: 1; }
     }
-  </style>
+    /* label flicker every ~4s */
+  @keyframes labelFlicker {
+    0%, 75%, 100% { opacity: 0; }
+    80% { opacity: 1; }
+    85% { opacity: 0.3; }
+    90% { opacity: 1; }
+    95% { opacity: 0.5; }
+  }
+
+  /* Mobile: make arrow larger on index (without touching services page) */
+  @media (max-width: 540px) {
+    .arrow { width: 64px; height: 64px; border-left: 4px solid #00FF00; border-bottom: 4px solid #00FF00; }
+    .scroll-cue .label { font-size: 1rem; }
+  }
+</style>
 
   <script>
     // JavaScript-based fallback for device detection
@@ -281,6 +297,10 @@
   <a href="/services" class="scroll-cue" id="servicesCue" aria-label="Go to Services">
     <div class="label">Services</div>
     <div class="arrow"></div>
+  </a>
+</body>
+</html>
+
   </a>
 </body>
 </html>
