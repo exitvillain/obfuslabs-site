@@ -37,13 +37,39 @@
       color:#7a7a7a;
       border: 1px dashed rgba(255,255,255,0.03);
       margin: 0.8rem 0 1.25rem 0;
+      text-align:center;
+      padding: 0 1rem;
     }
     .content h2 { margin-top:0.25rem; }
     .small { font-size:0.9rem; color:#bfbfbf; }
     .note { color:#bfbfbf; font-size:0.95rem; margin-top:1rem; }
     .back { margin-top:1rem; display:inline-block; }
-    .code { background: rgba(0,0,0,0.45); padding:0.6rem; border-radius:4px; display:block; white-space:pre-wrap; margin:0.6rem 0; color:#dfffdc; }
-    .repo { display:inline-block; margin-top:0.6rem; }
+    .callout {
+      background: rgba(255,255,255,0.03);
+      border: 1px dashed rgba(255,255,255,0.08);
+      padding: 0.9rem;
+      margin: 1rem 0;
+      color:#cfd3cf;
+    }
+    .grid {
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 820px) {
+      .grid { grid-template-columns: 1.2fr 0.8fr; }
+    }
+    .badge {
+      display:inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      background: rgba(0,255,0,0.06);
+      color:#bfffbf;
+      font-size:0.85rem;
+      margin-left:0.5rem;
+    }
+    .list-tight { margin:0.5rem 0 0.5rem 1.1rem; }
+    .repo { display:inline-block; margin-top:0.4rem; }
   </style>
 </head>
 <body>
@@ -61,52 +87,92 @@
 
   <header>
     <h1>AI Security</h1>
-    <div class="meta">CS50AI completion • research notes on adversarial ML, embeddings, and how to think like a red team against models</div>
+    <div class="meta">CS50AI completion • adversarial ML, model misuse, and autonomy risk through a red-team lens</div>
   </header>
 
   <article class="post">
-    <div class="meta"><strong>Date:</strong> Sep 15, 2025 — <span class="small">Short writeup & links to projects</span></div>
+    <div class="meta"><strong>Date:</strong> Sep 15, 2025 <span class="small">• Foundations finished; security experiments ongoing</span></div>
 
     <div class="hero-img" id="image-placeholder">
-      <!-- IMAGE SPOT: replace with an <img src="..."> when you upload slides or a neural-net visual -->
-      <div style="text-align:center;">
-        <p style="margin:0;">[Slide / neural-net image placeholder — replace with diagram or word2vec visual]</p>
-      </div>
+      <!-- Replace this with your neural-net / adversarial example / word2vec visual -->
+      <p>[Image placeholder — adversarial example or neural-net diagram]</p>
     </div>
 
-    <section class="content">
-      <h2>Summary</h2>
-      <p class="note">Completed <em>CS50's Introduction to Artificial Intelligence with Python</em> — course materials, final projects, and all programming assignments are in the repo linked below. This work is the launching point for ObfusLabs' practical exploration of AI security: adversarial testing, model hardening, and threat modeling for ML deployments.</p>
+    <section class="content grid">
+      <div>
+        <h2>Summary</h2>
+        <p class="note">
+          We completed <em>CS50’s Introduction to Artificial Intelligence with Python</em> and are applying that foundation to practical AI security:
+          prompt injection & jailbreaks, data poisoning, adversarial examples, and safe deployment patterns. Our stance is simple:
+          treat models like production software with an attack surface — then try to break them.
+        </p>
 
-      <h2>How this ties into security & red teaming</h2>
-      <p>We treat models like software and services: they accept inputs, produce outputs, and run in production. Our goal is to apply an offensive mindset to ML systems—ask how they can be fooled, how embeddings leak data, or how conjured inputs change outputs in hazardous ways. Practical areas we are exploring:</p>
+        <h2>Immediate surface (now → 2–5 years)</h2>
+        <ul class="list-tight small">
+          <li><strong>Prompt injection & jailbreaks:</strong> untrusted content steering model behavior; cross-app “indirect” prompt attacks via tools/RAG.</li>
+          <li><strong>Data leakage via embeddings & fine-tuning:</strong> unintentional disclosure of secrets, PII, or proprietary info.</li>
+          <li><strong>Data poisoning & model supply chain:</strong> tampered training sets, malicious weights, dependency risks.</li>
+          <li><strong>Adversarial examples:</strong> tiny perturbations that flip labels; physical attacks (stickers, patches) against vision models.</li>
+          <li><strong>Operational controls:</strong> auth to model endpoints, rate-limits, logging, review, and sandboxed tool use.</li>
+        </ul>
 
-      <ul class="small">
-        <li>Adversarial examples and input-space manipulation against classifiers and LLMs</li>
-        <li>Data poisoning and training-set integrity (how bad data can backdoor a model)</li>
-        <li>Model hardening: detection, input sanitization, and thresholding strategies</li>
-        <li>Operational security for ML: secrets handling, access controls for model endpoints, and safe deployment patterns</li>
-      </ul>
+        <div class="callout">
+          <strong>What we test:</strong> can untrusted inputs hijack the model or tools? can we exfiltrate secrets from embeddings? can small perturbations flip a decision?
+        </div>
 
-      <h2>Why word2vec still matters (short explainer)</h2>
-      <p>Word2vec is a simple, powerful idea: represent words as vectors (numbers) so that similar words live near each other in that vector space. It taught us that meaning can be captured as geometry — arithmetic with vectors produces useful relationships (e.g., <em>king − man + woman ≈ queen</em>). That embedding idea is the conceptual ancestor of modern language-model tooling: embeddings are how models reason about similarity, how search & retrieval systems pick relevant context, and how many prompt-engineering tricks actually work. The CS50 language lecture’s final section on word2vec was a small but mind-blowing bridge from classic NLP to today’s transformer stacks.</p>
+        <h2>Near-term autonomy risk (5–15 years)</h2>
+        <p class="small">
+          The “killer robot” concern isn’t sci-fi — the software logic is trivial, hardware cost is the bottleneck.
+          As autonomous drones/UGVs become cheaper, the insider-threat / misuse problem becomes a policy and security emergency.
+          Our focus here is <em>control</em>: authorization, geofencing, remote shutdown, and preventing model-driven escalation.
+        </p>
 
-      <h2>Work & repo</h2>
-      <p class="small">All CS50AI assignments and projects: <a class="repo" href="https://github.com/exitvillain/harvard-artificial-intelligence" target="_blank" rel="noopener noreferrer">github.com/exitvillain/harvard-artificial-intelligence</a></p>
+        <h2>Longer-term (and why we still care)</h2>
+        <p class="small">
+          General intelligence and recursive self-improvement are hard to scope operationally today, but our day-job defenses (verification,
+          monitoring, containment, least-privilege, red-teaming) are the same muscles we’ll need if the capabilities curve bends faster.
+        </p>
 
-      <h2>Proof-of-skill & artifacts</h2>
-      <p class="small">Rather than a certificate photo, we prefer to show working artifacts: notebooks, small adversarial demos, and project code in the repo above. If you want to show a cert, add it to the private team page — public-facing client pages look sleeker with working demos and short writeups instead of a snapshot of a course completion badge.</p>
+        <h2>What we finished</h2>
+        <ul class="list-tight small">
+          <li>CS50AI core topics: search, logic, probability, optimization, neural networks, reinforcement learning.</li>
+          <li>All programming assignments and projects are public.</li>
+        </ul>
+        <p class="small">Repo: <a class="repo" href="https://github.com/exitvillain/harvard-artificial-intelligence" target="_blank" rel="noopener noreferrer">github.com/exitvillain/harvard-artificial-intelligence</a></p>
 
-      <div class="code">
-        // Example short demo idea (to be added later)
-        // - tiny script that shows nearest neighbors in a word2vec-style embedding space
-        // - small adversarial perturbation that flips a classifier label
+        <h2>What we’re building next</h2>
+        <ul class="list-tight small">
+          <li>Minimal prompt-injection test harness for RAG/tool-using agents (attack strings + expected defenses).</li>
+          <li>Tiny adversarial-example demo (image classifier flip; physical printable patch optional).</li>
+          <li>Embedding-leak lab: measure semantic drift and secret retrieval risks from vector stores.</li>
+          <li>Ops hardening checklist for ML endpoints (authN/Z, quotas, content filters, review gates, kill-switches).</li>
+        </ul>
+
+        <h2>A tiny promise</h2>
+        <p class="note">
+          We’ll work to harden deployed models — and if robots start acting less friendly than they should, we plan to know which switch to try first.
+        </p>
+
+        <p class="back"><a href="current-research.html">← Back to Current Research</a></p>
       </div>
 
-      <h2>A tiny promise</h2>
-      <p class="note">We’ll do everything we can to harden deployed models — and if the day ever comes when robots look less friendly than they should, we promise to know which switch to try first. (Humor aside: we focus on practical, testable defenses.)</p>
+      <aside>
+        <h3>Foundations (short note)</h3>
+        <p class="small">
+          Embeddings (e.g., word2vec) showed how meaning can live in geometry — similar words cluster in vector space.
+          Modern transformers scale this idea massively. We keep this here not as nostalgia, but as the conceptual bridge
+          to why adversarial perturbations and poisoning work at all.
+        </p>
 
-      <p class="back"><a href="current-research.html">← Back to Current Research</a></p>
+        <h3>Show, don’t tell</h3>
+        <ul class="list-tight small">
+          <li>Prefer runnable artifacts to certificate photos.</li>
+          <li>Short writeups, clear PoCs, tight scope.</li>
+        </ul>
+
+        <h3>Image slot</h3>
+        <p class="small">Swap the placeholder with a neural-net diagram, adversarial stop sign, or a training curve screenshot.</p>
+      </aside>
     </section>
   </article>
 
@@ -114,14 +180,15 @@
     <p>Questions or collabs: <a href="mailto:daniel.gray@obfuslabs.com">daniel.gray@obfuslabs.com</a></p>
   </footer>
 
-<script>
-  const glitch = document.getElementById('glitch-letter');
-  const states = ['█', 'ʞ', 'U'];
-  let i = 0;
-  setInterval(() => {
-    glitch.textContent = states[i % states.length];
-    i++;
-  }, 700);
-</script>
+  <script>
+    const glitch = document.getElementById('glitch-letter');
+    const states = ['█', 'ʞ', 'U'];
+    let i = 0;
+    setInterval(() => {
+      glitch.textContent = states[i % states.length];
+      i++;
+    }, 700);
+  </script>
 </body>
 </html>
+
