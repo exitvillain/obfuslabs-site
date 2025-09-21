@@ -6,70 +6,71 @@
   <title>AI Security — ObfusLabs</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
-    body {
-      background-color: #0a0a0a;
-      color: #f0f0f0;
-      font-family: 'Courier New', Courier, monospace;
-      padding: 3rem;
-      line-height: 1.6;
-      max-width: 980px;
-      margin-left: auto;
-      margin-right: auto;
+    :root{
+      --bg:#0a0a0a;        /* black */
+      --fg:#f0f0f0;        /* white */
+      --muted:#bfbfbf;
+      --muted2:#9a9a9a;
+      --accent:#FF2B63;    /* ObfusLabs red */
+      --neon:#00FF00;      /* very occasional neon */
+      --line:rgba(255,255,255,0.03);
     }
-    a { color: #00FF00; text-decoration: underline; }
-    .logo { font-size: 2.2rem; letter-spacing: 0.6rem; display:flex; margin-bottom:1rem; }
-    .char { display:inline-block; transition: color 0.3s; }
-    .char.red { color: #FF2B63; }
-    header { margin-bottom: 1rem; }
-    .post {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.03);
-      padding: 1.5rem;
+    /* Base */
+    html,body{background:var(--bg); color:var(--fg); font-family:'Courier New', Courier, monospace;}
+    body{padding:3rem; line-height:1.6; max-width:980px; margin:0 auto;}
+    a{color:#fff; text-decoration:underline; text-decoration-color:var(--accent);}
+    a:hover{color:var(--accent);}
+    /* Logo */
+    .logo{
+      font-size:2.2rem; letter-spacing:0.6rem; display:flex;
+      margin-bottom:2.5rem; /* ensure image never collides */
+      user-select:none;
     }
-    .meta { color:#9a9a9a; font-size:0.95rem; margin-bottom:1rem; }
-    .hero-img {
+    .char{display:inline-block; transition:color .3s;}
+    .char.red{color:var(--accent);}
+    /* Header + meta */
+    header{margin-bottom:1rem;}
+    .meta{color:var(--muted2); font-size:.95rem; margin:.2rem 0 1rem;}
+    /* Post container */
+    .post{
+      background:rgba(255,255,255,0.02);
+      border:1px solid var(--line);
+      padding:1.5rem;
+    }
+    /* Hero image: smaller, contained, responsive, no overlap */
+    .hero-img{
       width:100%;
-      height:320px;
-      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#7a7a7a;
-      border: 1px dashed rgba(255,255,255,0.03);
-      margin: 0.8rem 0 1.25rem 0;
-      text-align:center;
-      padding: 0 1rem;
+      height:220px;                       /* compact banner */
+      display:flex; align-items:center; justify-content:center;
+      border:1px dashed var(--line);
+      background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      margin:1rem 0 1.5rem 0;
+      overflow:hidden; padding:0;
     }
-    .content h2 { margin-top:0.25rem; }
-    .small { font-size:0.9rem; color:#bfbfbf; }
-    .note { color:#bfbfbf; font-size:0.95rem; margin-top:1rem; }
-    .back { margin-top:1rem; display:inline-block; }
-    .callout {
-      background: rgba(255,255,255,0.03);
-      border: 1px dashed rgba(255,255,255,0.08);
-      padding: 0.9rem;
-      margin: 1rem 0;
-      color:#cfd3cf;
+    .hero-img img{
+      max-width:100%; max-height:100%;
+      object-fit:contain; display:block;
     }
-    .grid {
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
+    @media (max-width:520px){ .hero-img{height:200px;} }
+    @media (min-width:1024px){ .hero-img{height:260px;} }
+
+    /* Layout grid */
+    .grid{display:grid; grid-template-columns:1fr; gap:1rem;}
+    @media (min-width:820px){ .grid{grid-template-columns:1.2fr .8fr;} }
+
+    .small{font-size:.9rem; color:var(--muted);}
+    .note{color:var(--muted); font-size:.95rem; margin-top:1rem;}
+    .list-tight{margin:.5rem 0 .5rem 1.1rem;}
+    .callout{
+      background:rgba(255,255,255,0.03);
+      border:1px dashed rgba(255,255,255,0.08);
+      padding:.9rem; margin:1rem 0; color:#e6e6e6;
     }
-    @media (min-width: 820px) {
-      .grid { grid-template-columns: 1.2fr 0.8fr; }
-    }
-    .badge {
-      display:inline-block;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      background: rgba(0,255,0,0.06);
-      color:#bfffbf;
-      font-size:0.85rem;
-      margin-left:0.5rem;
-    }
-    .list-tight { margin:0.5rem 0 0.5rem 1.1rem; }
-    .repo { display:inline-block; margin-top:0.4rem; }
+    .repo{display:inline-block; margin-top:.4rem;}
+    .back{margin-top:1rem; display:inline-block;}
+
+    /* Tiny neon accent—very subtle */
+    .repo:hover{ text-shadow:0 0 6px rgba(0,255,0,0.25); }
   </style>
 </head>
 <body>
@@ -94,24 +95,26 @@
     <div class="meta"><strong>Date:</strong> Sep 15, 2025 <span class="small">• Foundations finished; security experiments ongoing</span></div>
 
     <div class="hero-img" id="image-placeholder">
-  <img src="obfus-ai.png" alt="Neural-net / adversarial example visual" />
-</div>
+      <!-- Swap filename to your final asset (e.g., ai-locks.png or ai-pic.png) -->
+      <img src="ai-locks.png" alt="Neural network diagram with secured paths (locks)"/>
+    </div>
 
     <section class="content grid">
       <div>
-        <h2>Summary</h2> 
-          We completed <em>CS50’s Introduction to Artificial Intelligence with Python as a supplement to my graduate work in Machine Learning that I did at NYU. </em> and are applying that foundation to practical AI security:
+        <h2>Summary</h2>
+        <p class="note">
+          We completed <em>CS50’s Introduction to Artificial Intelligence with Python</em> and are applying that foundation to practical AI security:
           prompt injection & jailbreaks, data poisoning, adversarial examples, and safe deployment patterns. Our stance is simple:
           treat models like production software with an attack surface — then try to break them.
         </p>
 
         <h2>Immediate surface (now → 2–5 years)</h2>
         <ul class="list-tight small">
-          <li><strong>Prompt injection & jailbreaks:</strong> untrusted content steering model behavior; cross-app “indirect” prompt attacks via tools/RAG.</li>
-          <li><strong>Data leakage via embeddings & fine-tuning:</strong> unintentional disclosure of secrets, PII, or proprietary info.</li>
+          <li><strong>Prompt injection & jailbreaks:</strong> untrusted content steering model behavior; indirect prompt attacks via tools/RAG.</li>
+          <li><strong>Data leakage via embeddings & fine-tuning:</strong> sensitive info exfiltrated from vector stores or tuned models.</li>
           <li><strong>Data poisoning & model supply chain:</strong> tampered training sets, malicious weights, dependency risks.</li>
-          <li><strong>Adversarial examples:</strong> tiny perturbations that flip labels; physical attacks (stickers, patches) against vision models.</li>
-          <li><strong>Operational controls:</strong> auth to model endpoints, rate-limits, logging, review, and sandboxed tool use.</li>
+          <li><strong>Adversarial examples:</strong> tiny perturbations that flip labels; physical attacks (stickers/patches) against vision models.</li>
+          <li><strong>Operational controls:</strong> auth to model endpoints, rate-limits, logging/review, sandboxed tool use, kill-switches.</li>
         </ul>
 
         <div class="callout">
@@ -120,15 +123,15 @@
 
         <h2>Near-term autonomy risk (5–15 years)</h2>
         <p class="small">
-          The “killer robot” concern isn’t sci-fi — the software logic is trivial, hardware cost is the bottleneck.
-          As autonomous drones/UGVs become cheaper, the insider-threat / misuse problem becomes a policy and security emergency.
-          Our focus here is <em>control</em>: authorization, geofencing, remote shutdown, and preventing model-driven escalation.
+          The “killer robot” concern isn’t sci-fi — the software logic is trivial; hardware cost is the bottleneck.
+          As autonomous drones/UGVs become cheaper, the insider-threat/misuse problem turns into a policy and security emergency.
+          Our focus: <em>control</em> — authorization, geofencing, remote shutdown, and preventing model-driven escalation.
         </p>
 
         <h2>Longer-term (and why we still care)</h2>
         <p class="small">
-          General intelligence and recursive self-improvement are hard to scope operationally today, but our day-job defenses (verification,
-          monitoring, containment, least-privilege, red-teaming) are the same muscles we’ll need if the capabilities curve bends faster.
+          General intelligence and recursive self-improvement are hard to scope operationally today, but our day-job defenses
+          (verification, monitoring, containment, least-privilege, red-teaming) are the same muscles we’ll need if capabilities bend faster.
         </p>
 
         <h2>What we finished</h2>
@@ -136,7 +139,10 @@
           <li>CS50AI core topics: search, logic, probability, optimization, neural networks, reinforcement learning.</li>
           <li>All programming assignments and projects are public.</li>
         </ul>
-        <p class="small">Repo: <a class="repo" href="https://github.com/exitvillain/harvard-artificial-intelligence" target="_blank" rel="noopener noreferrer">github.com/exitvillain/harvard-artificial-intelligence</a></p>
+        <p class="small">
+          Repo: <a class="repo" href="https://github.com/exitvillain/harvard-artificial-intelligence" target="_blank" rel="noopener noreferrer">
+          github.com/exitvillain/harvard-artificial-intelligence</a>
+        </p>
 
         <h2>What we’re building next</h2>
         <ul class="list-tight small">
@@ -158,8 +164,8 @@
         <h3>Foundations (short note)</h3>
         <p class="small">
           Embeddings (e.g., word2vec) showed how meaning can live in geometry — similar words cluster in vector space.
-          Modern transformers scale this idea massively. We keep this here not as nostalgia, but as the conceptual bridge
-          to why adversarial perturbations and poisoning work at all.
+          Modern transformers scale this idea massively. We keep this here as the conceptual bridge to why adversarial
+          perturbations and poisoning work at all.
         </p>
 
         <h3>Show, don’t tell</h3>
@@ -168,8 +174,8 @@
           <li>Short writeups, clear PoCs, tight scope.</li>
         </ul>
 
-        <h3>Image slot</h3>
-        <p class="small">Swap the placeholder with a neural-net diagram, adversarial stop sign, or a training curve screenshot.</p>
+        <h3>Image tip</h3>
+        <p class="small">Use your red/white/black “locked paths” art for this page. Keep neon to a minimum for consistency.</p>
       </aside>
     </section>
   </article>
@@ -180,12 +186,9 @@
 
   <script>
     const glitch = document.getElementById('glitch-letter');
-    const states = ['█', 'ʞ', 'U'];
-    let i = 0;
-    setInterval(() => {
-      glitch.textContent = states[i % states.length];
-      i++;
-    }, 700);
+    const states = ['█','ʞ','U'];
+    let i=0;
+    setInterval(()=>{glitch.textContent=states[i%states.length]; i++;},700);
   </script>
 </body>
 </html>
