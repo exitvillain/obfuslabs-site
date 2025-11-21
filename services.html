@@ -1,59 +1,250 @@
-<section id="soc" class="panel stack hidden" role="tabpanel" aria-labelledby="SOC">
-  <h1>Future Idea: SOC-as-a-Service</h1>
+<!-- services.html (earnest version) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Services – ObfusLabs</title>
 
-  <p>
-    This is not a real offering yet — it’s something I’d like ObfusLabs to grow into
-    once there’s a bigger team, more tooling, and more experience behind it.
-    I’m keeping this here so early supporters can see the long-term vision.
-  </p>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --fg: #f0f0f0;
+      --muted: #c7c7c7;
+      --panel: rgba(255,255,255,0.02);
+      --panel-border: rgba(255,255,255,0.03);
+      --accent: #00ff00; /* terminal green */
+      --accent2: #FF2B63; /* pink-red used in logo */
+    }
 
-  <h2>Why even think about a SOC?</h2>
-  <p>
-    A lot of companies want security visibility but can’t afford a giant SOC or a huge vendor.
-    Long-term, I’d love to build a small, attacker-aware SOC that’s transparent, lightweight,
-    and human — not a black-box portal full of noise.
-  </p>
+    /* Base */
+    html, body { height: 100%; }
+    body {
+      margin: 0; padding: 3rem; box-sizing: border-box;
+      background: var(--bg); color: var(--fg);
+      font-family: "Courier New", Courier, monospace; line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: underline; }
 
-  <h2>What a future SOC at ObfusLabs might look like</h2>
-  <ul>
-    <li>
-      <strong>Human-first monitoring</strong> — people who actually understand attacker behavior,
-      not generic alert processors.
-    </li>
-    <li>
-      <strong>Clear, concise escalation</strong> — “here’s what happened, here’s what it means,
-      here’s what to do” instead of giant PDFs.
-    </li>
-    <li>
-      <strong>Detection tuning</strong> with an offensive mindset — making sure alerts fire for real attacks
-      while cutting down the noise.
-    </li>
-    <li>
-      <strong>Threat-hunting sessions</strong> that focus on learning and visibility rather than checkbox exercises.
-    </li>
-    <li>
-      <strong>Simple, terminal-friendly tooling</strong> instead of flashy dashboards — inspired by ObfuScope,
-      my lab project.
-    </li>
-  </ul>
+    /* Logo */
+    .logo {
+      font-size: 2.5rem;
+      letter-spacing: .6rem;
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .char { display: inline-block; transition: color .3s; }
+    .char.red { color: var(--accent2); }
 
-  <h2>What this is NOT (yet)</h2>
-  <ul>
-    <li>No 24/7 team.</li>
-    <li>No SLAs.</li>
-    <li>No enterprise onboarding process.</li>
-    <li>No compliance mapping or formal IR retainer.</li>
-    <li>No polished “product.”</li>
-  </ul>
+    /* Panels */
+    .panel {
+      position: relative;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      padding: 1.25rem;
+      margin-top: 1.25rem;
+      border-radius: 6px;
+      overflow: visible;
+    }
+    .panel::before {
+      content: "";
+      position: absolute;
+      left: 8px; top: 8px; right: 8px; bottom: 8px;
+      z-index: -1;
+      pointer-events: none;
+      border-radius: 6px;
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,0.02) 0 8px, transparent 8px),
+        linear-gradient(180deg, rgba(255,255,255,0.02) 0 8px, transparent 8px);
+      background-size: 48px 48px, 48px 48px;
+      background-color: rgba(255,255,255,0.01);
+    }
 
-  <p>
-    Right now, this is purely a direction I’d like to grow into.
-    If you’re excited about the idea — or want to help shape it —
-    feel free to reach out.
-  </p>
+    /* Headings */
+    h1, h2, h3 { margin: .2rem 0 .6rem; }
+    h1 { font-size: 1.4rem; }
+    h2 { font-size: 1.2rem; color: var(--muted); }
 
-  <p class="cta">
-    Contact: <a href="mailto:daniel.gray@obfuslabs.com?subject=Future%20SOC-as-a-Service%20Vision">daniel.gray@obfuslabs.com</a>
-  </p>
-</section>
+    /* Services layout */
+    .stack { display: grid; gap: 1.25rem; }
+
+    /* Arrow cue */
+    .scroll-cue {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      cursor: pointer;
+      user-select: none;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.25));
+    }
+    .scroll-cue .label {
+      font-size: .85rem;
+      color: var(--muted);
+      margin-bottom: .25rem;
+      letter-spacing: .04rem;
+    }
+    .arrow {
+      width: 24px; height: 24px;
+      border-left: 2px solid var(--accent);
+      border-bottom: 2px solid var(--accent);
+      transform: rotate(-45deg);
+      animation: bob 1.2s ease-in-out infinite, pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes bob {
+      0%,100%{ transform: translateY(0) rotate(-45deg);}
+      50%{ transform: translateY(6px) rotate(-45deg);}
+    }
+    @keyframes pulse {
+      0%,100%{ opacity: .5;}
+      50%{ opacity: 1; }
+    }
+
+    /* View switcher (tabs) */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin: .5rem 0 0;
+      flex-wrap: wrap;
+    }
+    .tab {
+      padding: .35rem .6rem;
+      border: 1px dashed var(--panel-border);
+      color: var(--muted);
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .tab.active {
+      color: var(--fg);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(0,255,0,0.08) inset;
+    }
+    .hidden { display: none; }
+
+    /* Lists */
+    ul { margin: .5rem 0 0 1.2rem; }
+
+    /* Footer / contact */
+    .cta { margin-top: .75rem; }
+
+    /* Responsive */
+    @media (max-width: 540px) {
+      body { padding: 1.5rem; }
+      .logo { font-size: 2.1rem; letter-spacing: .35rem; }
+      .panel { padding: 1rem; }
+      .scroll-cue { bottom: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Logo -->
+  <div class="logo" aria-hidden="true">
+    <span class="char">O</span>
+    <span class="char red">B</span>
+    <span class="char">F</span>
+    <span class="char" id="glitch-letter">Ʞ</span>
+    <span class="char">S</span>
+    <span class="char">L</span>
+    <span class="char">Δ</span>
+    <span class="char red">B</span>
+    <span class="char">S</span>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs" role="tablist">
+    <div class="tab active" role="tab" aria-selected="true" tabindex="0" data-target="#assessments">Right now</div>
+    <div class="tab" role="tab" aria-selected="false" tabindex="0" data-target="#soc">Future: SOC-as-a-Service</div>
+  </div>
+
+  <!-- "Right now" section (honest: just learning / open to opportunities) -->
+  <section id="assessments" class="panel stack" role="tabpanel" aria-labelledby="Right now">
+    <h1>What ObfusLabs is right now</h1>
+    <p>
+      ObfusLabs is currently just me, Dan, learning, hacking in labs, and trying to get better at
+      offensive security and detection engineering. I’m not running a consulting business yet and
+      I’m not taking on formal client work at this time.
+    </p>
+
+    <h2>What I’m doing</h2>
+    <ul>
+      <li>Working through web app and cloud security labs, CTFs, and certifications.</li>
+      <li>Experimenting with small tooling ideas and ways to visualize security data.</li>
+      <li>Documenting what I learn so I can eventually turn it into something useful for others.</li>
+    </ul>
+
+    <h2>If you landed here…</h2>
+    <ul>
+      <li>I’m open to hearing about junior / mid-level offensive security roles or SOC roles with an attacker focus.</li>
+      <li>I’m open to low-stakes collaborations, mentoring, or research ideas.</li>
+      <li>I’m not going to pretend to offer services I can’t reliably deliver yet.</li>
+    </ul>
+
+    <p class="cta">
+      If you’re curious about my work or just want to say hi:
+      <br />
+      <a href="mailto:daniel.gray@obfuslabs.com?subject=ObfusLabs%20hello">daniel.gray@obfuslabs.com</a>
+    </p>
+  </section>
+
+  <!-- SOC-as-a-Service (future idea, your text) -->
+  <section id="soc" class="panel stack hidden" role="tabpanel" aria-labelledby="SOC">
+    <h1>Future Idea: SOC-as-a-Service</h1>
+
+    <p>
+      This is not a real offering yet — it’s something I’d like ObfusLabs to grow into
+      once there’s a bigger team, more tooling, and more experience behind it.
+      I’m keeping this here so early supporters can see the long-term vision.
+    </p>
+
+    <h2>Why even think about a SOC?</h2>
+    <p>
+      A lot of companies want security visibility but can’t afford a giant SOC or a huge vendor.
+      Long-term, I’d love to build a small, attacker-aware SOC that’s transparent, lightweight,
+      and human — not a black-box portal full of noise.
+    </p>
+
+    <h2>What a future SOC at ObfusLabs might look like</h2>
+    <ul>
+      <li>
+        <strong>Human-first monitoring</strong> — people who actually understand attacker behavior,
+        not generic alert processors.
+      </li>
+      <li>
+        <strong>Clear, concise escalation</strong> — “here’s what happened, here’s what it means,
+        here’s what to do” instead of giant PDFs.
+      </li>
+      <li>
+        <strong>Detection tuning</strong> with an offensive mindset — making sure alerts fire for real attacks
+        while cutting down the noise.
+      </li>
+      <li>
+        <strong>Threat-hunting sessions</strong> that focus on learning and visibility rather than checkbox exercises.
+      </li>
+      <li>
+        <strong>Simple, terminal-friendly tooling</strong> instead of flashy dashboards — inspired by my lab projects.
+      </li>
+    </ul>
+
+    <h2>What this is NOT (yet)</h2>
+    <ul>
+      <li>No 24/7 team.</li>
+      <li>No SLAs.</li>
+      <li>No enterprise onboarding process.</li>
+      <li>No compliance mapping or formal IR retainer.</li>
+      <li>No polished “product.”</li>
+    </ul>
+
+    <p>
+      Right now, this is purely a direction I’d like to grow into.
+      If you’re excited about the idea — or want to help shape it —
+      feel free to reach out.
+    </p>
+
+    <p class="cta">
+      Contact: <a
 
