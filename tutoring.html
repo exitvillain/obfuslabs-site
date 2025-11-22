@@ -5,165 +5,226 @@
   <meta charset="utf-8" />
   <title>Tutoring – ObfusLabs</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- Matrix landing fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
+
   <style>
-  
     body {
       background-color: #0a0a0a;
       color: #f0f0f0;
       font-family: 'Courier New', Courier, monospace;
       padding: 3rem;
       line-height: 1.6;
+      opacity: 0;               /* Hidden until intro ends */
+      transition: opacity 0.5s ease;
     }
+
     a { color: #00FF00; text-decoration: underline; }
-    .logo { font-size: 2.5rem; letter-spacing: 0.6rem; display:flex; margin-bottom:1rem; }
+    .logo { font-size: 2.5rem; letter-spacing: 0.6rem; display:flex; margin-bottom:1rem; opacity: 1; }
     .char { display:inline-block; transition: color 0.3s; }
     .char.red { color: #FF2B63; }
-    header { margin-bottom: 1.5rem; }
+
     .bulletin {
       background: rgba(255,255,255,0.02);
       border: 1px solid rgba(255,255,255,0.03);
       padding: 1.25rem;
       max-width: 760px;
     }
+
     .muted { color: #9a9a9a; font-size:0.95rem; }
     .small { font-size:0.9rem; color:#bfbfbf; }
     h1, h2, h3 { margin-top: 0.4rem; }
-    ul { padding-left: 1.2rem; }
-    footer { margin-top:2rem; color:#7a7a7a; font-size:0.85rem; }
+
+    /* --- Matrix Intro --- */
+    #matrix {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #0a0a0a;
+      z-index: 9999;
+    }
+    #overlay-text {
+      position: fixed;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #FF2B63;
+      font-size: 1.2rem;
+      font-family: 'Fira Mono', monospace;
+      z-index: 10000;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+    }
+
   </style>
 </head>
+
 <body>
-  <div class="logo" aria-hidden="true">
-    <span class="char">O</span>
-    <span class="char red">B</span>
-    <span class="char">F</span>
-    <span class="char" id="glitch-letter">Ʞ</span>
-    <span class="char">S</span>
-    <span class="char">L</span>
-    <span class="char">Δ</span>
-    <span class="char red">B</span>
-    <span class="char">S</span>
+  <!-- Matrix intro canvas -->
+  <canvas id="matrix"></canvas>
+  <div id="overlay-text">ACCESSING: obfuslabs.com/tutoring...</div>
+
+  <!-- PAGE CONTENT -->
+  <div id="page-content" style="opacity: 0; transition: opacity .5s ease;">
+
+    <div class="logo" aria-hidden="true">
+      <span class="char">O</span>
+      <span class="char red">B</span>
+      <span class="char">F</span>
+      <span class="char" id="glitch-letter">Ʞ</span>
+      <span class="char">S</span>
+      <span class="char">L</span>
+      <span class="char">Δ</span>
+      <span class="char red">B</span>
+      <span class="char">S</span>
+    </div>
+
+    <header>
+      <h1>Math, Science & Computer Science Tutoring</h1>
+      <p class="muted">
+        This page is for families and students who found me through outside listings (Craigslist, referrals, etc.).<br>
+        ObfusLabs is my security research studio; tutoring is the teaching side of what I do.
+      </p>
+    </header>
+
+    <section class="bulletin">
+      <h2 class="small">Hi, I'm Daniel — NYC-based STEM Tutor</h2>
+
+      <p>
+        I’m Daniel G., a math, science, and computer science tutor based in New York City.
+        I work with high school, AP, and college students who want clear explanations, patient support, and
+        a realistic connection between what they’re learning in class and how it shows up in the real world.
+      </p>
+
+      <p class="small">
+        <strong>Education:</strong><br>
+        Columbia University — B.A. in Physics &amp; Film Studies<br>
+        New York University — M.S. in Computer Science (2022)
+      </p>
+
+      <h3>Teaching Approach</h3>
+      <p>
+        A lot of students hit a wall when physics, chemistry, or calculus suddenly stop feeling like “plug-and-chug”
+        and start looking like a foreign language. Symbols pile up, formulas feel random, and homework questions look
+        nothing like the examples from class.
+      </p>
+      <p>
+        My job is to slow things down and make the ideas feel natural. If a formula is confusing, we break it down:
+        where it comes from, what each symbol means, and how to recognize when to use it.
+      </p>
+      <p>
+        You don’t learn math or science by staring at notes—you learn by doing problems the right way.
+        I guide practice so students build both skill and confidence. At first progress can feel slow, but once the
+        fundamentals lock in, everything accelerates.
+      </p>
+
+      <h3>Subjects I Tutor</h3>
+
+      <p><strong>Math</strong></p>
+      <ul>
+        <li>Algebra I–II, Geometry, Trigonometry, Pre-Calculus</li>
+        <li>Calculus I, AP Calc AB/BC</li>
+        <li>Calc III (for motivated students)</li>
+        <li>Intro Linear Algebra &amp; Differential Equations</li>
+      </ul>
+
+      <p><strong>Physics</strong></p>
+      <ul>
+        <li>Regents Physics &amp; Honors</li>
+        <li>AP Physics 1 &amp; 2</li>
+        <li>AP Physics C: Mechanics &amp; E&amp;M</li>
+        <li>College Physics I &amp; II</li>
+      </ul>
+
+      <p><strong>Chemistry</strong></p>
+      <ul>
+        <li>High School, Honors, Regents</li>
+        <li>AP Chemistry</li>
+        <li>College Chem I &amp; II</li>
+      </ul>
+
+      <p><strong>Computer Science</strong></p>
+      <ul>
+        <li>AP CS A</li>
+        <li>Python, Java, JavaScript, C, C++, C# (some)</li>
+        <li>Algorithms &amp; Data Structures</li>
+        <li>Networking &amp; OS Foundations</li>
+        <li>Cybersecurity basics</li>
+      </ul>
+
+      <h3>Rates</h3>
+      <ul>
+        <li>In-person (NYC): <strong>$65/hr</strong></li>
+        <li>Online: <strong>$50/hr</strong></li>
+      </ul>
+
+      <h3>Contact</h3>
+      <p>
+        Call or text: <strong>917-769-3073</strong><br>
+        Email: <a href="mailto:daniel.gray@obfuslabs.com">daniel.gray@obfuslabs.com</a>
+      </p>
+    </section>
+
+    <footer>
+      <p>This page is not linked from the main ObfusLabs navigation.</p>
+    </footer>
+
   </div>
 
-  <header>
-    <h1>Math, Science & Computer Science Tutoring</h1>
-    <p class="muted">
-      This page is for families and students who found me through outside listings (Craigslist, referrals, etc.).<br>
-      ObfusLabs is my security research studio; tutoring is the teaching side of what I do.
-    </p>
-  </header>
 
-  <section class="bulletin" aria-labelledby="tutoring-title">
-    <h2 id="tutoring-title" class="small">Hi, I'm Daniel — NYC-based STEM Tutor</h2>
-
-    <p>
-      I’m Daniel G., a math, science, and computer science tutor based in New York City.
-      I work with high school, AP, and college students who want clear explanations, patient support, and
-      a realistic connection between what they’re learning in class and how it shows up in the real world.
-    </p>
-
-    <p class="small">
-      <strong>Education:</strong><br>
-      Columbia University — B.A. in Physics &amp; Film Studies<br>
-      New York University — M.S. in Computer Science (2022)
-    </p>
-
-    <h3>Teaching Approach</h3>
-    <p>
-      A lot of students hit a wall when physics, chemistry, or calculus suddenly stop feeling like “plug-and-chug”
-      and start looking like a foreign language. Symbols pile up, formulas feel random, and homework questions look
-      nothing like the examples from class.
-    </p>
-    <p>
-      My job is to slow things down and make the ideas feel natural. If a formula is confusing, we take it apart:
-      where it comes from, what each symbol means, and how to recognize when to use it. I don’t just hand over answers;
-      I walk students through problems until the patterns start to feel familiar and intuitive.
-    </p>
-    <p>
-      You don’t learn math and science by staring at notes—you learn by doing lots of problems the right way.
-      I guide practice so students build both skill and confidence. At first progress can feel slow, but once the
-      fundamentals lock in, everything accelerates.
-      <!-- single new sentence below -->
-      Over time, the “strange language” of the subject turns into something they can speak fluently and use with confidence.
-    </p>
-
-    <h3>Subjects I Tutor</h3>
-
-    <p><strong>Math</strong></p>
-    <ul>
-      <li>Algebra I &amp; II, Geometry, Trigonometry, Pre-Calculus</li>
-      <li>Calculus I, AP Calculus AB/BC</li>
-      <li>Introductory multivariable calculus (Calc III) for motivated students</li>
-      <li>Introductory linear algebra &amp; differential equations (case-by-case; I’m happy to discuss your syllabus)</li>
-    </ul>
-
-    <p><strong>Physics</strong></p>
-    <ul>
-      <li>Regents Physics &amp; Honors Physics</li>
-      <li>AP Physics 1 &amp; 2</li>
-      <li>AP Physics C — Mechanics and Electricity &amp; Magnetism</li>
-      <li>Algebra-based and calculus-based college Physics I &amp; II</li>
-    </ul>
-
-    <p><strong>Chemistry</strong></p>
-    <ul>
-      <li>High School Chemistry (all levels), Regents &amp; Honors</li>
-      <li>AP Chemistry</li>
-      <li>College Chemistry I &amp; II</li>
-    </ul>
-    <p class="small">
-      I actually started out as a chemistry kid at Brooklyn Tech, and it was the first subject I ever tutored.
-      Even after shifting more toward physics, math, and computer science in college, I kept taking chemistry at Columbia
-      and earned A’s in both College Chemistry I and II. That early background is a big part of why I still enjoy teaching chemistry so much.
-    </p>
-
-    <p><strong>Computer Science</strong></p>
-    <ul>
-      <li>AP Computer Science A</li>
-      <li>Python, JavaScript, Java, C, C++ (and some C#)</li>
-      <li>Intro algorithms &amp; data structures</li>
-      <li>Intro computer networks &amp; operating systems concepts</li>
-      <li>Foundations of cybersecurity (for curious high school or early-college students)</li>
-    </ul>
-    <p class="small">
-      My day job is in cybersecurity and software engineering, so when we do CS, I can connect abstract topics
-      to how they show up in real systems, security, and modern software.
-    </p>
-
-    <h3>Rates</h3>
-    <ul>
-      <li>In-person (NYC): <strong>$65/hour</strong></li>
-      <li>Online (Zoom/Google Meet): <strong>$50/hour</strong></li>
-    </ul>
-    <p class="small">
-      I keep some flexibility for long-term weekly students or families juggling multiple subjects—if cost is a concern,
-      we can usually find a structure that works.
-    </p>
-
-    <h3>Contact</h3>
-    <p>
-      Call or text: <strong>917-769-3073</strong><br>
-      Email: <a href="mailto:daniel.gray@obfuslabs.com">daniel.gray@obfuslabs.com</a>
-    </p>
-    <p class="small">
-      When you reach out, feel free to include a photo of the syllabus, your latest test or quiz, or a few homework problems
-      that are giving you trouble. That helps me hit the ground running in the first session.
-    </p>
-  </section>
-
-  <footer>
-    <p>This page is not linked from the main ObfusLabs navigation. If you’re here, you probably found me through a tutoring listing.</p>
-  </footer>
-
+  <!-- MATRIX INTRO SCRIPT -->
   <script>
     const glitch = document.getElementById('glitch-letter');
-    const states = ['█', 'ʞ', 'U'];
-    let i = 0;
+    const glitchStates = ['█', 'ʞ', 'U'];
+    let gi = 0;
     setInterval(() => {
-      glitch.textContent = states[i % states.length];
-      i++;
+      glitch.textContent = glitchStates[gi % glitchStates.length];
+      gi++;
     }, 700);
+
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const letters = '01+×=■%▚░▓█▌☰!@#$%^&*abcdef'.split('');
+    const fontSize = 28;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array.from({ length: columns }, () => 1);
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(10,10,10,0.15)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.font = `${fontSize}px Fira Mono`;
+
+      drops.forEach((drop, i) => {
+        const char = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillStyle = Math.random() < 0.02 ? '#FF2B63' : '#f0f0f0';
+        ctx.fillText(char, i * fontSize, drop * fontSize);
+
+        if (drop * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      });
+    }
+
+    const matrixInterval = setInterval(drawMatrix, 40);
+
+    // End intro after 2 seconds
+    setTimeout(() => {
+      clearInterval(matrixInterval);
+      canvas.style.display = 'none';
+      document.getElementById('overlay-text').style.opacity = 0;
+
+      // fade in the page
+      document.getElementById('page-content').style.opacity = 1;
+      document.body.style.opacity = 1;
+
+    }, 2000);
   </script>
+
 </body>
 </html>
 
