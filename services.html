@@ -141,6 +141,53 @@
     }
   </style>
 </head>
+<script>
+  (function () {
+    const tabs = Array.from(document.querySelectorAll('.tab[data-target]'));
+    const panels = tabs
+      .map(t => document.querySelector(t.getAttribute('data-target')))
+      .filter(Boolean);
+
+    function activateTab(tab) {
+      const targetSel = tab.getAttribute('data-target');
+      const targetPanel = document.querySelector(targetSel);
+      if (!targetPanel) return;
+
+      // Update tabs
+      tabs.forEach(t => {
+        const isActive = t === tab;
+        t.classList.toggle('active', isActive);
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        t.setAttribute('tabindex', isActive ? '0' : '-1');
+      });
+
+      // Update panels
+      panels.forEach(p => p.classList.add('hidden'));
+      targetPanel.classList.remove('hidden');
+
+      // Optional: keep focus on active tab for accessibility
+      tab.focus({ preventScroll: true });
+    }
+
+    // Click handlers
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => activateTab(tab));
+
+      // Keyboard handlers (Enter/Space)
+      tab.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          activateTab(tab);
+        }
+      });
+    });
+
+    // Ensure initial state is consistent (in case classes got out of sync)
+    const initiallyActive = document.querySelector('.tab.active[data-target]') || tabs[0];
+    if (initiallyActive) activateTab(initiallyActive);
+  })();
+</script>
+  
 <body>
   <!-- Logo -->
   <div class="logo" aria-hidden="true">
